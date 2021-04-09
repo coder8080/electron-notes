@@ -1,0 +1,24 @@
+<%- include('blocks/head.ejs', {title: 'Создать запись'}) %>
+<div class="container center">
+    <h2>Создать запись</h2>
+</div>
+<hr>
+<div class="container">
+    <form id="create-note-form">
+        <div class="input-field">
+            <input id='heading-input' type="text" name="heading" autocomplete="off" required>
+            <label for="heading-input">Название</label>
+        </div>
+        <div class="input-field">
+            <textarea class="materialize-textarea" id="text-input" name="text" required></textarea>
+            <label for="text-input">Текст</label>
+        </div>
+        <input type="submit" value="Создать" class="waves-effect waves-light btn">
+        <a id="cancel-button" class="btn waves-effect waves-light">Отмена</a>
+    </form>
+</div>
+<script>
+    const event = new Event('init-for-new-note-page')
+    window.dispatchEvent(event)
+</script>
+<%- include('blocks/footer.ejs') %>

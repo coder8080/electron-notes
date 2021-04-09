@@ -1,0 +1,46 @@
+<%- include('blocks/head.ejs', {title: note.heading}) %>
+<div class="container center">
+    <h3>
+        <%= note.heading %>
+    </h3>
+</div>
+<hr>
+<div class="container">
+    <% if (note.text.length >= 500) { %>
+        <h5>
+            <a href="/change-note/<%= note.id %>">Изменить</a>
+        </h5>
+        <h5>
+            <a href="/">На главную</a>
+        </h5>
+        <h5>
+            <a onclick="ask_for_remove()">Удалить</a>
+        </h5>
+    <% } %>
+    <h5>
+        <%= note.text %>
+    </h5>
+    <div class="row">
+        <div class="col s12 m4 center">
+            <h5>
+                <a class="btn waves-effect waves-light" id="change-button">Изменить</a>
+            </h5>
+        </div>
+        <div class="col s12 m4 center">
+            <h5>
+                <a class="btn waves-effect waves-light" id="go-on-main-button">На главную</a>
+            </h5>
+        </div>
+        <div class="col s12 m4 center">
+            <h5>
+                <a class="btn waves-effect waves-light" id="remove-button">Удалить</a>
+            </h5>
+        </div>
+    </div>
+</div>
+<input type="hidden" id="id-input" value="<%= note.id %>" name="id">
+<script>
+    let event = new Event('init-for-note-page')
+    window.dispatchEvent(event)
+</script>
+<%- include('blocks/footer.ejs') %>

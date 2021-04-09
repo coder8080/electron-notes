@@ -1,0 +1,34 @@
+<%- include('blocks/head.ejs', {title: 'Ваши записи'}) %>
+<div class="container center">
+    <h4>
+        Ваши записи:
+    </h4>
+    <% if (are_notes === true) { %>
+        <ul>
+            <% notes.forEach((note) => { %>
+                <li>
+                    <h4>
+                        <a>
+                            <%= note.heading %>
+                            <input type="hidden" value="<%= note.id %>">
+                        </a>
+                    </h4>
+                </li>
+            <% }) %>
+        </ul>
+    <% } else { %>
+        <h4 id="no-notes">У вас ещё нет записей</h4>
+    <% } %>
+    <div class="row">
+        <div class="col s12 m6">
+            <h5>
+                <a class="waves-effect waves-light btn" id="new_note_button">Создать запись</a>
+            </h5>
+        </div>
+    </div>
+</div>
+<script>
+    let event = new Event('init-for-profile-page')
+    window.dispatchEvent(event)
+</script>
+<%- include('blocks/footer.ejs') %>
