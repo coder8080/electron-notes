@@ -3,5 +3,24 @@
     "ejs-electron": "^2.1.1",
     "electron": "^12.0.2",
     "sqlite3": "^5.0.2"
-  }
+  },
+  "name": "electron-notes",
+  "description": "Настольный блокнот, написанный на node.js с использованием библиотеки electron",
+  "version": "0.0.1",
+  "main": "main.js",
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "electron main.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/coder8080/electron-notes.git"
+  },
+  "author": "coder8080",
+  "license": "SEE LICENSE IN LICENSE",
+  "bugs": {
+    "url": "https://github.com/coder8080/electron-notes/issues"
+  },
+  "homepage": "https://github.com/coder8080/electron-notes#readme"
 }
