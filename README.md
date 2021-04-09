@@ -25,3 +25,8 @@ npm start
 
 # Проблемы
 Обо всех проблемах сообщать тут: https://github.com/coder8080/electron-notes/issues
+
+# Скриншоты
+![Главная страница](https://raw.githubusercontent.com/coder8080/electron-notes/screenshots/1.png)
+
+![Страница создания записи](https://raw.githubusercontent.com/coder8080/electron-notes/screenshots/1.png)
