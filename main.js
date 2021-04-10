@@ -23,6 +23,7 @@ function createWindow() {
         }
     })
     go_on_main()
+    win.removeMenu()
 }
 
 /* Функция переадресации на главную страницу */
@@ -66,12 +67,15 @@ function go_on_main() {
  * @param {number} id - номер записи, на страницу которой нужно перейти
  * */
 function go_on_note_page(id) {
+    // Выполняем запрос к базе данных
     db.get(`select * from notes where id = ${id};`, (err, data) => {
+        // Обрабатываем ошибку
         if (err) {
             console.log('app crashed when getting information from database with error:')
             throw err
         }
         if (data) {
+            // Отправляем пользователю страницу
             ejs.data('note', data)
             win.loadFile(path.join(__dirname, 'pages/note.ejs')).then(err => {
                 if (err) {
@@ -85,6 +89,7 @@ function go_on_note_page(id) {
     })
 }
 
+// Открываем окно
 app.whenReady().then(() => {
     createWindow()
     if (BrowserWindow.getAllWindows().length === 0) {
