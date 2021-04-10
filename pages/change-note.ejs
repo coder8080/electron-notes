@@ -1,0 +1,33 @@
+<%- include('blocks/head.ejs', {title: 'Изменить запись'}) %>
+<div class="container center">
+    <h2>Изменить запись "<%= note.heading %>"</h2>
+</div>
+<hr>
+<div class="container">
+    <form id="change-note-form">
+        <div class="input-field">
+            <input type="hidden">
+            <input id='heading-input' type="text" value="<%= note.heading %>" name="heading" required>
+            <label for="heading-input">Название</label>
+        </div>
+        <div class="input-field">
+            <textarea class="materialize-textarea" id="text-input" name="text" required><%= note.text %></textarea>
+            <label for="text-input">Текст</label>
+        </div>
+        <div class="row">
+            <div class="col s12 m6">
+                <input type="submit" value="Сохранить изменения" class="btn btn-outline-primary">
+            </div>
+            <div class="col s12 m6">
+                <div class="hide-on-med-and-up"><br></div>
+                <a id="cancel-button" class="btn waves-effect waves-dark">Отмена</a>
+            </div>
+        </div>
+    </form>
+</div>
+<input type="hidden" id="id-input" value="<%= note.id %>" name="id">
+<script>
+    const event = new Event('init-for-change-note-page')
+    window.dispatchEvent(event)
+</script>
+<%- include('blocks/footer.ejs') %>
