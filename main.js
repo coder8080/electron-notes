@@ -7,6 +7,7 @@ const ejs = require('ejs-electron')
 const path = require('path')
 const sqlite = require('sqlite3')
 const db = new sqlite.Database('db.sqlite3')
+const fetch = require('node-fetch')
 
 // Объявляем переменную окна
 let win
@@ -24,6 +25,7 @@ function createWindow() {
     })
     go_on_main()
     win.removeMenu()
+    // win.openDevTools()
 }
 
 /* Функция переадресации на главную страницу */
@@ -157,6 +159,74 @@ ipcMain.on('change-note', (e, id, heading, text) => {
             throw err
         }
         go_on_note_page(id)
+    })
+})
+
+ipcMain.on('go-on-sync-page', () => {
+    win.loadFile(path.join(__dirname, 'pages', 'sync.ejs')).then((err) => {
+        if (err) {
+            console.log('app crashed when showing sync page with error:')
+            throw err
+        }
+    })
+})
+
+ipcMain.on('sync', (e, address, login, password, type) => {
+    db.all('select heading, text from notes;', (err, data) => {
+        if (err) {
+            console.log('app crashed when getting notes to sync')
+            throw err
+        }
+        if (data.length === 1) {
+            data = [data]
+        }
+        data.forEach((item, index) => {
+            data[index] = JSON.stringify(item)
+        })
+        const notes_text = data.join(';')
+        fetch(`${address}/sync`, {
+            method: 'POST',
+            body: JSON.stringify({"login": login, "password": password, "notes": notes_text, "type": type}),
+            headers: {"Content-Type": "application/json"}
+        }).then(response => {
+            if (response.ok) {
+                if (response.status === 200) {
+                    e.returnValue = 'success'
+                    if (type === 'hard-download' || type === 'download' || type === 'upload-and-download') {
+                        return response.text()
+                    }
+                } else if (response.status === 201) {
+                    e.returnValue = 'incorrect password'
+                } else if (response.status === 202) {
+                    e.returnValue = 'no user'
+                }
+            } else {
+                console.log('Ошибка при синхронизации')
+            }
+        }).then((data) => {
+            if (data) {
+                data = data.split(';')
+                for (let i = 0; i < data.length; i++) {
+                    data[i] = JSON.parse(data[i])
+                }
+                if (type === 'hard-download') {
+                    db.run(`delete from notes`, (err) => {
+                        if (err) {
+                            console.log('error when clearing db')
+                            throw err
+                        }
+                        for (const note of data) {
+                            db.run(`insert into notes (heading, text) values ('${note.heading}', '${note.text}')`)
+                        }
+                    })
+                }
+                if (type === 'download' || type === 'upload-and-download') {
+                    for (const note of data) {
+                        db.run(`insert into notes (heading, text) values ('${note.heading}', '${note.text}')`)
+                    }
+                }
+            }
+        })
     })
 })
 

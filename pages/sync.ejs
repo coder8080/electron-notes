@@ -1,0 +1,65 @@
+<%- include('blocks/head.ejs', {title: 'Ваши записи'}) %>
+<div class="container center">
+    <h4>Синхронизация локальных записей с облаком</h4>
+</div>
+<div class="container">
+    <form id="sync-form">
+        <div class="input-field">
+            <input type="text" name="address" id="address-input" autocomplete="off" required>
+            <label for="address-input">Адрес сервера</label>
+            <span class="helper-text">
+                Так как у проекта нет финансирования, нет официального сервера. Сюда вы должны ввести адрес сервера, с которым хотите провести синхронизацию, например: http://localhost:3000.
+                На сервере должен быть запущен <a
+                        href="https://github.com/coder8080/express-notes">этот</a> проект.</span>
+        </div>
+        <span class="helper-text">
+            Адрес сервера должен быть указан на главной странице сайта.
+        </span>
+        <span class="helper-text">Совет: не перепутайте протокол безопасности (http:// и https://) и при необходимости не забудьте указать порт (:3000)</span>
+        <p>
+            <input name="type" type="radio" value="upload" id="upload">
+            <label for="upload">Отправить новые локальные записи на сервер</label>
+        </p>
+        <p>
+            <input name="type" type="radio" value="download" id="download">
+            <label for="download">Скачать новые записи с сервера</label>
+        </p>
+        <p>
+            <input name="type" type="radio" value="upload-and-download" id="upload-and-download" checked>
+            <label for="upload-and-download">Отправить и скачать несинхронизированные записи записи</label>
+        </p>
+        <p>
+            <input name="type" type="radio" value="hard-upload" id="hard-upload">
+            <label for="hard-upload">Загрузить локальные записи на сервер и удалить другие (полная синхронизация с
+                настольным приложением)</label>
+        </p>
+        <p>
+                <input name="type" type="radio" value="hard-download" id="hard-download">
+            <label for="hard-download">Скачать записи с сервера и удалить другие (полная синхронизация с сервером)</label>
+        </p>
+        <div class="input-field">
+            <input type="text" name="login" id='login-input' autocomplete="off" required>
+            <label for="login-input">Логин</label>
+        </div>
+        <div class="input-field">
+            <input type="password" name="password" id="password-input" required>
+            <label for="password-input">Пароль</label>
+        </div>
+        <div class="row">
+            <div class="col s12 m6">
+                <input type="submit" value="синхронизировать" class="btn waves-effect waves-light">
+            </div>
+            <div class="col s12 m6">
+                <div class="hide-on-med-and-up">
+                    <br>
+                </div>
+                <a class="btn waves-effect waves-light" id="cancel-button">Отмена</a>
+            </div>
+        </div>
+    </form>
+</div>
+<script>
+    const event = new Event('init-for-sync-page')
+    window.dispatchEvent(event)
+</script>
+<%- include('blocks/footer.ejs') %>

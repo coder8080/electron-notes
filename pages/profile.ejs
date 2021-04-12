@@ -19,10 +19,16 @@
     <% } else { %>
         <h4 id="no-notes">У вас ещё нет записей</h4>
     <% } %>
-    <div class="container center">
-        <h5>
+    <div class="row">
+        <div class="col s12 m6">
             <a class="waves-effect waves-light btn" id="new_note_button">Создать запись</a>
-        </h5>
+        </div>
+        <div class="col s12 m6">
+            <div class="hide-on-med-and-up">
+                <br>
+            </div>
+            <a id="sync-button" class="btn waves-effect waves-light">Синхронизировать</a>
+        </div>
     </div>
 </div>
 <script>

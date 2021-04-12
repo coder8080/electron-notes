@@ -14,10 +14,15 @@ window.addEventListener('init-for-profile-page', () => {
             })
         })
     }
-    let new_note_button = document.getElementById('new_note_button')
+    const new_note_button = document.getElementById('new_note_button')
+    const sync_button = document.getElementById('sync-button')
     new_note_button.addEventListener('click', (e) => {
         e.preventDefault()
         ipc.send('new-note')
+    })
+    sync_button.addEventListener('click', (e) => {
+        e.preventDefault()
+        ipc.send('go-on-sync-page')
     })
 })
 
@@ -43,7 +48,7 @@ window.addEventListener('init-for-note-page', () => {
 window.addEventListener('init-for-new-note-page', () => {
     const form = document.getElementById('create-note-form')
     console.log(form)
-    form.addEventListener('submit', function(e) {
+    form.addEventListener('submit', function (e) {
         e.preventDefault()
         const data = new FormData(this)
         const heading = data.get('heading')
@@ -61,7 +66,7 @@ window.addEventListener('init-for-change-note-page', () => {
     const id = document.getElementById('id-input').value
     const form = document.getElementById('change-note-form')
     const cancel_button = document.getElementById('cancel-button')
-    form.addEventListener('submit', function(e) {
+    form.addEventListener('submit', function (e) {
         e.preventDefault()
         const data = new FormData(this)
         const heading = data.get('heading')
@@ -71,5 +76,34 @@ window.addEventListener('init-for-change-note-page', () => {
     cancel_button.addEventListener('click', (e) => {
         e.preventDefault()
         ipc.send('view-note', id)
+    })
+})
+
+window.addEventListener('init-for-sync-page', () => {
+    const form = document.getElementById('sync-form')
+    const cancel_button = document.getElementById('cancel-button')
+    form.addEventListener('submit', function (e) {
+        e.preventDefault()
+        const form_data = new FormData(this)
+        const address = form_data.get('address')
+        const login = form_data.get('login')
+        const password = form_data.get('password')
+        const type = form_data.get('type')
+        status = ipc.sendSync('sync', address, login, password, type)
+        console.log(status)
+        if (status === 'success') {
+            alert('Успешно синхронизировано')
+            ipc.send('go-on-main')
+        }
+        else if (status === 'incorrect password') {
+            alert("Неверный пароль")
+        }
+        else if (status === 'no user') {
+            alert('Нет пользователя с таким логином')
+        }
+    })
+    cancel_button.addEventListener('click', (e) => {
+        e.preventDefault()
+        ipc.send('go-on-main')
     })
 })
