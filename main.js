@@ -203,6 +203,8 @@ ipcMain.on('sync', (e, address, login, password, type) => {
             } else {
                 console.log('Ошибка при синхронизации')
             }
+        }).catch((err) => {
+            e.returnValue = 'no server'
         }).then((data) => {
             if (data) {
                 data = data.split(';')

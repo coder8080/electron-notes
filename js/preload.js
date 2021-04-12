@@ -1,6 +1,7 @@
 // Импортируем нужные модули
 const {ipcRenderer: ipc} = require('electron')
 
+// Уведомляем пользователя об опасности
 console.log("Не вводите сюда ничего! Если кто-то попросил вас это сделать, то 11 шансов из 10 что вы стали жертвой мошенников! Ввод чего-либо сюда может нанести урон вашему компьютеру!")
 
 window.addEventListener('init-for-profile-page', () => {
@@ -90,16 +91,16 @@ window.addEventListener('init-for-sync-page', () => {
         const password = form_data.get('password')
         const type = form_data.get('type')
         status = ipc.sendSync('sync', address, login, password, type)
-        console.log(status)
         if (status === 'success') {
             alert('Успешно синхронизировано')
             ipc.send('go-on-main')
-        }
-        else if (status === 'incorrect password') {
+        } else if (status === 'incorrect password') {
             alert("Неверный пароль")
-        }
-        else if (status === 'no user') {
+        } else if (status === 'no user') {
             alert('Нет пользователя с таким логином')
+        }
+        else if (status === 'no server') {
+            alert('Не удалось подключиться к серверу: отсутствует подключение к интернету или адрес сервера указан неверно.')
         }
     })
     cancel_button.addEventListener('click', (e) => {
