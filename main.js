@@ -21,7 +21,8 @@ function createWindow() {
         center: true,
         webPreferences: {
             preload: path.join(__dirname, 'js', 'preload.js')
-        }
+        },
+        icon: path.join(__dirname, 'public', 'icon.png')
     })
     go_on_main()
     win.removeMenu()
