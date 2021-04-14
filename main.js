@@ -90,6 +90,31 @@ function go_on_note_page(id) {
         }
     })
 }
+// TODO: проверка на отсутствие символов разделения в тексте записи
+
+/**
+ * Конвертация из текста в массив json элементов
+ * @param {String} text - текст, который необходимо конвертировать
+ * @returns {Array} - полученный массив
+ * */
+function text_to_array(text) {
+    let data = text.split('%*%')
+    for (let i = 0; i < data.length; i++) {
+        data[i] = JSON.parse(data[i])
+    }
+    return data
+}
+/**
+ * Конвертация массива json элементов в текст
+ * @param {Array} array - массив, который нужно конвертировать
+ * @return {String} - полученный текст
+ * */
+function array_to_text(array) {
+    array.forEach((item, index) => {
+        array[index] = JSON.stringify(item)
+    })
+    return array.join('%*%')
+}
 
 // Открываем окно
 app.whenReady().then(() => {
@@ -171,7 +196,9 @@ ipcMain.on('go-on-sync-page', () => {
     })
 })
 
+/* Синхронизация */
 ipcMain.on('sync', (e, address, login, password, type) => {
+    // Получаем записи из базы данных
     db.all('select heading, text from notes;', (err, data) => {
         if (err) {
             console.log('app crashed when getting notes to sync')
@@ -180,10 +207,9 @@ ipcMain.on('sync', (e, address, login, password, type) => {
         if (data.length === 1) {
             data = [data]
         }
-        data.forEach((item, index) => {
-            data[index] = JSON.stringify(item)
-        })
-        const notes_text = data.join(';')
+        // Преобразуем в одну строку
+        const notes_text = array_to_text(data)
+        // Отправляем запрос
         fetch(`${address}/sync`, {
             method: 'POST',
             body: JSON.stringify({"login": login, "password": password, "notes": notes_text, "type": type}),
@@ -203,14 +229,12 @@ ipcMain.on('sync', (e, address, login, password, type) => {
             } else {
                 console.log('Ошибка при синхронизации')
             }
-        }).catch((err) => {
+        }).catch(() => {
             e.returnValue = 'no server'
         }).then((data) => {
+            // Добавление в базу данных полученных записей
             if (data) {
-                data = data.split(';')
-                for (let i = 0; i < data.length; i++) {
-                    data[i] = JSON.parse(data[i])
-                }
+                data = text_to_array(data)
                 if (type === 'hard-download') {
                     db.run(`delete from notes`, (err) => {
                         if (err) {

@@ -48,13 +48,17 @@ window.addEventListener('init-for-note-page', () => {
 
 window.addEventListener('init-for-new-note-page', () => {
     const form = document.getElementById('create-note-form')
-    console.log(form)
     form.addEventListener('submit', function (e) {
         e.preventDefault()
         const data = new FormData(this)
         const heading = data.get('heading')
         const text = data.get('text')
-        ipc.send('create-note', heading, text)
+        if (text.search('%*%') === -1) {
+            ipc.send('create-note', heading, text)
+        }
+        else {
+            alert('Заметка не может содержать набор символов %*%. Удалите его, а затем повторите попытку.')
+        }
     })
     let cancel_button = document.getElementById('cancel-button')
     cancel_button.addEventListener('click', (e) => {
@@ -72,7 +76,12 @@ window.addEventListener('init-for-change-note-page', () => {
         const data = new FormData(this)
         const heading = data.get('heading')
         const text = data.get('text')
-        ipc.send('change-note', id, heading, text)
+        if (text.search('%*%') === -1) {
+            ipc.send('change-note', id, heading, text)
+        }
+        else {
+            alert('Заметка не может содержать набор символов %*%. Удалите его, а затем повторите попытку.')
+        }
     })
     cancel_button.addEventListener('click', (e) => {
         e.preventDefault()
