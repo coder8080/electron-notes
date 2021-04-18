@@ -17,6 +17,7 @@ window.addEventListener('init-for-profile-page', () => {
     }
     const new_note_button = document.getElementById('new_note_button')
     const sync_button = document.getElementById('sync-button')
+    const change_theme_button = document.getElementById('change-theme-button')
     new_note_button.addEventListener('click', (e) => {
         e.preventDefault()
         ipc.send('new-note')
@@ -24,6 +25,10 @@ window.addEventListener('init-for-profile-page', () => {
     sync_button.addEventListener('click', (e) => {
         e.preventDefault()
         ipc.send('go-on-sync-page')
+    })
+    change_theme_button.addEventListener('click', (e) => {
+        e.preventDefault()
+        ipc.send('change-theme')
     })
 })
 

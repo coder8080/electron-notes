@@ -56,11 +56,18 @@ function go_on_main() {
         // Показываем пользователю страницу
         ejs.data('are_notes', are_notes)
         ejs.data('notes', notes)
-        win.loadFile(path.join(__dirname, 'pages/profile.ejs')).then(err => {
+        db.get(`select value from theme where id = 1;`, (err, data) => {
             if (err) {
-                console.log('app crashed when showing first page with error:')
+                console.log('error when getting theme')
                 throw err
             }
+            ejs.data('theme', data.value)
+            win.loadFile(path.join(__dirname, 'pages/profile.ejs')).then(err => {
+                if (err) {
+                    console.log('app crashed when showing first page with error:')
+                    throw err
+                }
+            })
         })
     })
 }
@@ -91,7 +98,6 @@ function go_on_note_page(id) {
         }
     })
 }
-// TODO: проверка на отсутствие символов разделения в тексте записи
 
 /**
  * Конвертация из текста в массив json элементов
@@ -105,6 +111,7 @@ function text_to_array(text) {
     }
     return data
 }
+
 /**
  * Конвертация массива json элементов в текст
  * @param {Array} array - массив, который нужно конвертировать
@@ -253,6 +260,33 @@ ipcMain.on('sync', (e, address, login, password, type) => {
                     }
                 }
             }
+        })
+    })
+})
+
+/* Смена темы */
+ipcMain.on('change-theme', () => {
+    // Получаем текущую тему
+    db.get(`select value from theme where id = 1;`, (err, data) => {
+        if (err) {
+            console.log('error when getting theme')
+            throw err
+        }
+        // Меняем тему
+        let theme;
+        if (data.value === 'light') {
+            theme = 'dark'
+        } else if (data.value === 'dark') {
+            theme = 'light'
+        } else {
+            console.log('error when changing theme')
+            return
+        }
+        db.run(`update theme set value = '${theme}' where id = 1;`, (err) => {
+            if (err) {
+                throw err
+            }
+            go_on_main()
         })
     })
 })

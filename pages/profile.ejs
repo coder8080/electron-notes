@@ -1,6 +1,6 @@
 <%- include('blocks/head.ejs', {title: 'Ваши записи'}) %>
 <div class="container center">
-    <h4>
+    <h4 class="header">
         Ваши записи:
     </h4>
     <% if (are_notes === true) { %>
@@ -20,14 +20,33 @@
         <h4 id="no-notes">У вас ещё нет записей</h4>
     <% } %>
     <div class="row">
-        <div class="col s12 m6">
+        <div class="col s12 m4">
             <a class="waves-effect waves-light btn" id="new_note_button">Создать запись</a>
         </div>
-        <div class="col s12 m6">
+        <div class="col s12 m4">
             <div class="hide-on-med-and-up">
                 <br>
             </div>
             <a id="sync-button" class="btn waves-effect waves-light">Синхронизировать</a>
+        </div>
+        <div class="col s12 m4">
+            <div class="hide-on-med-and-up">
+                <br>
+            </div>
+            <h5>
+                Тема:
+            </h5>
+            <div class="switch" id="change-theme-button">
+                <label>
+                    Светлая
+                    <input type="checkbox" <% if (theme === 'dark'){ %>checked
+                            <% } %>
+                    >
+                    <span class="lever"></span>
+                    Тёмная
+                </label>
+            </div>
+            <!--            <a class="btn waves-effect waves-light">Сменить тему</a>-->
         </div>
     </div>
 </div>
