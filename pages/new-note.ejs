@@ -12,8 +12,10 @@
             <textarea class="materialize-textarea" id="text-input" name="text" required></textarea>
             <label for="text-input">Текст</label>
         </div>
-        <input type="submit" value="Создать" class="waves-effect waves-light btn">
-        <a id="cancel-button" class="btn waves-effect waves-light">Отмена</a>
+        <input type="submit" value="Создать"
+               class="waves-effect waves-light btn <% if (theme === 'dark') { %>blue-grey<% } %>">
+        <a id="cancel-button"
+           class="btn <% if (theme === 'dark') { %>blue-grey<% } %> waves-effect waves-light">Отмена</a>
     </form>
 </div>
 <script>

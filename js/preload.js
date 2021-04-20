@@ -6,7 +6,7 @@ console.log("Не вводите сюда ничего! Если кто-то п�
 
 window.addEventListener('init-for-profile-page', () => {
     if (document.getElementById('no-notes') !== undefined) {
-        let links = document.querySelectorAll('ul>li>h4>a')
+        let links = document.querySelectorAll('div.card-action>a')
         links.forEach((item) => {
             item.addEventListener('click', function (e) {
                 e.preventDefault()

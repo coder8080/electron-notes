@@ -14,6 +14,17 @@
         input[type="text"], input[type="password"], textarea {
             font-size: large !important;
         }
+        .two-lines {
+            text-overflow: ellipsis;
+            overflow: hidden;
+            -ms-line-clamp: 2;
+            -webkit-line-clamp: 2;
+            line-clamp: 2;
+            display: -webkit-box;
+            word-wrap: break-word;
+            -webkit-box-orient: vertical;
+            box-orient: vertical;
+        }
     </style>
     <% if (theme === 'dark') { %>
         <%- include('dark_theme.ejs') %>
