@@ -26,7 +26,6 @@ function createWindow() {
     })
     go_on_main()
     win.removeMenu()
-    // win.openDevTools()
 }
 
 /* Функция переадресации на главную страницу */

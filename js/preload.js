@@ -6,12 +6,20 @@ console.log("Не вводите сюда ничего! Если кто-то п�
 
 window.addEventListener('init-for-profile-page', () => {
     if (document.getElementById('no-notes') !== undefined) {
-        let links = document.querySelectorAll('div.card-action>a')
-        links.forEach((item) => {
+        let read_links = document.querySelectorAll('div.card-action>a.read')
+        let change_links = document.querySelectorAll('div.card-action>a.change')
+        read_links.forEach((item) => {
             item.addEventListener('click', function (e) {
                 e.preventDefault()
                 let id = this.lastElementChild.value
                 ipc.send('view-note', id)
+            })
+        })
+        change_links.forEach((item) => {
+            item.addEventListener('click', function (e) {
+                e.preventDefault()
+                let id = this.lastElementChild.value
+                ipc.send('go-on-change-note-page', id)
             })
         })
     }
