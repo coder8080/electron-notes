@@ -36,6 +36,6 @@ npm start
 Обо всех проблемах сообщать тут: https://github.com/coder8080/electron-notes/issues
 
 # Скриншоты
-![Главная страница](https://raw.githubusercontent.com/coder8080/electron-notes/master/screenshots/1.png)
+![Светлая тема](https://raw.githubusercontent.com/coder8080/electron-notes/master/screenshots/light_theme.png)
 
-![Страница создания записи](https://raw.githubusercontent.com/coder8080/electron-notes/master/screenshots/2.png)
+![Тёмная тема](https://raw.githubusercontent.com/coder8080/electron-notes/master/screenshots/dark_theme.png)
