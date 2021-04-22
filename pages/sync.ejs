@@ -50,16 +50,21 @@
             <label for="password-input">Пароль</label>
         </div>
         <div class="row">
-            <div class="col s12 m6">
-                <input type="submit" value="синхронизировать"
-                       class="btn <% if (theme === 'dark') { %>blue-grey<% } %> waves-effect waves-light">
+            <div class="col s12 m12 l6">
+                <button type="submit" class="btn <% if (theme === 'dark') { %>blue-grey<% } %> waves-effect waves-light">
+                    <i class="material-icons left">cloud</i>
+                    Синхронизировать
+                </button>
             </div>
-            <div class="col s12 m6">
-                <div class="hide-on-med-and-up">
+            <div class="col s12 m12 l6">
+                <div class="hide-on-large-only">
                     <br>
                 </div>
-                <a class="btn <% if (theme === 'dark') { %>blue-grey<% } %> waves-effect waves-light"
-                   id="cancel-button">Отмена</a>
+                <button type="button" class="btn <% if (theme === 'dark') { %>blue-grey<% } %> waves-effect waves-light"
+                   id="cancel-button">
+                    <i class="material-icons left">cancel</i>
+                    Отмена
+                </button>
             </div>
         </div>
     </form>

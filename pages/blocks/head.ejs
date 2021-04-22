@@ -14,12 +14,12 @@
             font-size: large !important;
         }
 
-        .two-lines {
+        .one-line {
             text-overflow: ellipsis;
             overflow: hidden;
-            -ms-line-clamp: 2;
-            -webkit-line-clamp: 2;
-            line-clamp: 2;
+            -ms-line-clamp: 1;
+            -webkit-line-clamp: 1;
+            line-clamp: 1;
             display: -webkit-box;
             word-wrap: break-word;
             -webkit-box-orient: vertical;
@@ -36,6 +36,12 @@
     </style>
     <% if (theme === 'dark') { %>
         <%- include('dark_theme.ejs') %>
+    <% } else if (theme === 'light') { %>
+        <style>
+            body {
+                background-color: whitesmoke;
+            }
+        </style>
     <% } %>
     <title><%= title %></title>
 </head>

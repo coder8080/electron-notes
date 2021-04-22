@@ -15,11 +15,19 @@
         </div>
         <div class="row">
             <div class="col s12 m6">
-                <input type="submit" value="Сохранить изменения" class="btn <% if (theme === 'dark') { %>blue-grey<% } %> waves-effect waves-light">
+                <button type="submit"
+                        class="btn <% if (theme === 'dark') { %>blue-grey<% } %> waves-effect waves-light">
+                    <i class="material-icons left">save</i>
+                    Сохранить изменения
+                </button>
             </div>
             <div class="col s12 m6">
                 <div class="hide-on-med-and-up"><br></div>
-                <a id="cancel-button" class="btn <% if (theme === 'dark') { %>blue-grey<% } %> waves-effect waves-light">Отмена</a>
+                <a id="cancel-button"
+                   class="btn <% if (theme === 'dark') { %>blue-grey<% } %> waves-effect waves-light">
+                    <i class="material-icons left">cancel</i>
+                    Отмена
+                </a>
             </div>
         </div>
     </form>

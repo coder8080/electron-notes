@@ -10,18 +10,24 @@
                     <div class="card <% if (theme === 'dark') { %>blue-grey<% } else { %>hoverable<% } %>">
                         <div class="card-content">
                     <span class="card-title">
-                        <%= note.heading %>
+                        <p class="one-line">
+                            <%= note.heading %>
+                        </p>
                     </span>
-                            <p class="two-lines">
+                            <p class="one-line">
                                 <%= note.text %>
                             </p>
-                            <div class="card-action">
-                                <a style="cursor: pointer" class="read">
+                            <div class="card-action" style="
+                            padding-bottom: 0;
+                            display: flex;
+                            flex-direction: column;
+">
+                                <a style="cursor: pointer; display: inline" class="read">
                                     <i class="material-icons tiny">book</i>
                                     Читать
                                     <input type="hidden" value="<%= note.id %>">
                                 </a>
-                                <a style="cursor: pointer" class="change">
+                                <a style="cursor: pointer; display: inline" class="change">
                                     <i class="material-icons tiny">edit</i>
                                     Изменить
                                     <input type="hidden" value="<%= note.id %>">
@@ -48,7 +54,8 @@
             </div>
             <a id="sync-button" class="btn <% if (theme === 'dark') { %>blue-grey<% } %> waves-effect waves-light">
                 <i class="material-icons left">cloud</i>
-                Синхронизировать
+                <span class="hide-on-med-and-up">Синхронизировать</span>
+                <span class="hide-on-small-only">Синх...</span>
             </a>
         </div>
         <div class="col s12 m4">

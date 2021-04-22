@@ -8,7 +8,10 @@
     <% if (note.text.length >= 500) { %>
         <h5>
             <a href="/change-note/<%= note.id %>"
-               class="btn <% if (theme === 'dark') { %>blue-grey<% } %> waves-effect waves-light">Изменить</a>
+               class="btn <% if (theme === 'dark') { %>blue-grey<% } %> waves-effect waves-light">
+                <i class="material-icons left">edit</i>
+                Изменить
+            </a>
         </h5>
         <h5>
             <a href="/" class="btn <% if (theme === 'dark') { %>blue-grey<% } %> waves-effect waves-light">На
@@ -21,22 +24,31 @@
     <% } %>
     <pre style="font-size: medium"><%= note.text %></pre>
     <div class="row">
-        <div class="col s12 m4 center">
+        <div class="col s12 m12 l4 center">
             <h5>
                 <a class="btn <% if (theme === 'dark') { %>blue-grey<% } %> waves-effect waves-light"
-                   id="change-button">Изменить</a>
+                   id="change-button">
+                    <i class="material-icons left">edit</i>
+                    Изменить
+                </a>
             </h5>
         </div>
-        <div class="col s12 m4 center">
+        <div class="col s12 m12 l4 center">
             <h5>
                 <a class="btn <% if (theme === 'dark') { %>blue-grey<% } %> waves-effect waves-light"
-                   id="go-on-main-button">На главную</a>
+                   id="go-on-main-button">
+                    <i class="material-icons left">home</i>
+                    На главную
+                </a>
             </h5>
         </div>
-        <div class="col s12 m4 center">
+        <div class="col s12 m12 l4 center">
             <h5>
                 <a class="btn <% if (theme === 'dark') { %>blue-grey<% } %> waves-effect waves-light"
-                   id="remove-button">Удалить</a>
+                   id="remove-button">
+                    <i class="material-icons left">delete</i>
+                    Удалить
+                </a>
             </h5>
         </div>
     </div>
