@@ -1,8 +1,51 @@
 <%- include('blocks/head.ejs', {title: 'Ваши записи'}) %>
-<div class="container center">
-    <h4 class="header">
-        Ваши записи:
-    </h4>
+<style>
+    .menu-button {
+        cursor: pointer;
+    }
+
+    .nav-wrapper {
+        padding-left: 10px;
+    }
+</style>
+<div class="row">
+    <div class="col s1 left" style="padding-top: 9px">
+        <a data-activates="menu" class="menu-button"><i class="material-icons small">settings</i></a>
+    </div>
+    <div class="col s10 center">
+        <h5>
+            Ваши записи
+        </h5>
+    </div>
+    <div class="col s1"></div>
+</div>
+<ul class="side-nav" id="menu">
+    <li>
+        <div class="container">
+            <h5>
+                Тема:
+            </h5>
+            <div class="switch" id="change-theme-button">
+                <label class="valign-wrapper">
+                    <span class="material-icons tiny">light_mode</span>
+                    Светлая
+                    <input type="checkbox" <% if (theme === 'dark'){ %>checked
+                            <% } %>
+                    >
+                    <span class="lever"></span>
+                    <span class="material-icons tiny">dark_mode</span>
+                    Тёмная
+                </label>
+            </div>
+        </div>
+    </li>
+</ul>
+<!--<nav>
+    <div class="nav-wrapper">
+        <span class="brand-logo center">Ваши записи</span>
+    </div>
+</nav>-->
+<div class="center" style="padding-left: 1rem; padding-right: 1rem">
     <% if (are_notes === true) { %>
         <div class="row">
             <% notes.forEach((note) => { %>
@@ -42,46 +85,26 @@
         <h4 id="no-notes">У вас ещё нет записей</h4>
     <% } %>
     <div class="row">
-        <div class="col s12 m4">
+        <div class="col s12 m6 l6">
             <a class="waves-effect waves-light btn <% if (theme === 'dark') { %>blue-grey<% } %>" id="new_note_button">
                 <i class="material-icons left">add</i>
                 Создать запись
             </a>
         </div>
-        <div class="col s12 m4">
+        <div class="col s12 m6 l6">
             <div class="hide-on-med-and-up">
                 <br>
             </div>
             <a id="sync-button" class="btn <% if (theme === 'dark') { %>blue-grey<% } %> waves-effect waves-light">
                 <i class="material-icons left">cloud</i>
-                <span class="hide-on-med-and-up">Синхронизировать</span>
-                <span class="hide-on-small-only">Синх...</span>
+                Синхронизировать
             </a>
-        </div>
-        <div class="col s12 m4">
-            <div class="hide-on-med-and-up">
-                <br>
-            </div>
-            <h5>
-                Тема:
-            </h5>
-            <div class="switch" id="change-theme-button">
-                <label>
-                    <i class="material-icons tiny">light_mode</i>
-                    Светлая
-                    <input type="checkbox" <% if (theme === 'dark'){ %>checked
-                            <% } %>
-                    >
-                    <span class="lever"></span>
-                    <i class="material-icons tiny">dark_mode</i>
-                    Тёмная
-                </label>
-            </div>
         </div>
     </div>
 </div>
 <script>
     let event = new Event('init-for-profile-page')
     window.dispatchEvent(event)
+    $(".menu-button").sideNav();
 </script>
 <%- include('blocks/footer.ejs') %>

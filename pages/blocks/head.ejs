@@ -33,15 +33,23 @@
         .btn {
             border-radius: 1rem;
         }
+
+        nav {
+            margin-bottom: 1rem;
+        }
+
+        .menu-button {
+            cursor: pointer;
+        }
+
+        .nav-wrapper {
+            padding-left: 10px;
+        }
     </style>
     <% if (theme === 'dark') { %>
         <%- include('dark_theme.ejs') %>
     <% } else if (theme === 'light') { %>
-        <style>
-            body {
-                background-color: #f0f0f0;
-            }
-        </style>
+        <%- include('light_theme.ejs')%>
     <% } %>
     <title><%= title %></title>
 </head>

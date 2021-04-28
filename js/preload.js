@@ -68,8 +68,7 @@ window.addEventListener('init-for-new-note-page', () => {
         const text = data.get('text')
         if (text.search('%*%') === -1) {
             ipc.send('create-note', heading, text)
-        }
-        else {
+        } else {
             alert('Заметка не может содержать набор символов %*%. Удалите его, а затем повторите попытку.')
         }
     })
@@ -91,8 +90,7 @@ window.addEventListener('init-for-change-note-page', () => {
         const text = data.get('text')
         if (text.search('%*%') === -1) {
             ipc.send('change-note', id, heading, text)
-        }
-        else {
+        } else {
             alert('Заметка не может содержать набор символов %*%. Удалите его, а затем повторите попытку.')
         }
     })
@@ -120,8 +118,7 @@ window.addEventListener('init-for-sync-page', () => {
             alert("Неверный пароль")
         } else if (status === 'no user') {
             alert('Нет пользователя с таким логином')
-        }
-        else if (status === 'no server') {
+        } else if (status === 'no server') {
             alert('Не удалось подключиться к серверу: отсутствует подключение к интернету или адрес сервера указан неверно.')
         }
     })
