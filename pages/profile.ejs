@@ -25,32 +25,49 @@
             <h5>
                 Тема:
             </h5>
-            <div class="switch" id="change-theme-button">
-                <label class="valign-wrapper">
-                    <span class="material-icons tiny">light_mode</span>
-                    Светлая
-                    <input type="checkbox" <% if (theme === 'dark'){ %>checked
+            <form id="theme_form">
+                <div>
+                    <input type="radio" id="light_theme" name="theme" value="light"
+                    <% if (theme === 'light') { %>
+                           checked
                             <% } %>
                     >
-                    <span class="lever"></span>
-                    <span class="material-icons tiny">dark_mode</span>
-                    Тёмная
-                </label>
-            </div>
+                    <label for="light_theme">Стандартная светлая</label>
+                </div>
+                <div>
+                    <input type="radio" id="dark_theme" name="theme" value="dark"
+                    <% if (theme === 'dark') { %>
+                           checked
+                            <% } %>
+                    >
+                    <label for="dark_theme">Стандартная тёмная</label>
+                </div>
+                <div>
+                    <input type="radio" id="red_theme" name="theme" value="red"
+                    <% if (theme === 'red') { %>
+                           checked
+                            <% } %>
+                    >
+                    <label for="red_theme">Красная</label>
+                </div>
+                <div>
+                    <input type="radio" id="blue_theme" name="theme" value="blue"
+                    <% if (theme === 'blue') { %>
+                           checked
+                            <% } %>
+                    >
+                    <label for="blue_theme">Синяя</label>
+                </div>
+            </form>
         </div>
     </li>
 </ul>
-<!--<nav>
-    <div class="nav-wrapper">
-        <span class="brand-logo center">Ваши записи</span>
-    </div>
-</nav>-->
 <div class="center" style="padding-left: 1rem; padding-right: 1rem">
     <% if (are_notes === true) { %>
         <div class="row">
             <% notes.forEach((note) => { %>
                 <div class="col s12 m6 l4">
-                    <div class="card <% if (theme === 'dark') { %>blue-grey<% } else { %>hoverable<% } %>">
+                    <div class="card <% if (theme === 'light') { %>hoverable<% } %>">
                         <div class="card-content">
                     <span class="card-title">
                         <p class="one-line">
@@ -86,7 +103,7 @@
     <% } %>
     <div class="row">
         <div class="col s12 m6 l6">
-            <a class="waves-effect waves-light btn <% if (theme === 'dark') { %>blue-grey<% } %>" id="new_note_button">
+            <a class="waves-effect waves-light btn" id="new_note_button">
                 <i class="material-icons left">add</i>
                 Создать запись
             </a>
@@ -95,7 +112,7 @@
             <div class="hide-on-med-and-up">
                 <br>
             </div>
-            <a id="sync-button" class="btn <% if (theme === 'dark') { %>blue-grey<% } %> waves-effect waves-light">
+            <a id="sync-button" class="btn waves-effect waves-light">
                 <i class="material-icons left">cloud</i>
                 Синхронизировать
             </a>
@@ -106,5 +123,9 @@
     let event = new Event('init-for-profile-page')
     window.dispatchEvent(event)
     $(".menu-button").sideNav();
+    const labels = document.querySelectorAll('label')
+    for (let item of labels) {
+        item.style.color = 'black'
+    }
 </script>
 <%- include('blocks/footer.ejs') %>

@@ -49,8 +49,32 @@
     <% if (theme === 'dark') { %>
         <%- include('dark_theme.ejs') %>
     <% } else if (theme === 'light') { %>
-        <%- include('light_theme.ejs')%>
+        <%- include('light_theme.ejs') %>
+    <% } else if (theme === 'red') { %>
+        <%- include('red_theme.ejs') %>
+    <% } else if (theme === 'blue') { %>
+        <%- include('blue_theme.ejs') %>
     <% } %>
     <title><%= title %></title>
+    <% if (theme === 'light' || theme === 'red') { %>
+        <script>
+            window.onload = function () {
+                const labels = document.querySelectorAll('label')
+                for (let item of labels) {
+                    item.style.color = 'black'
+                }
+            }
+        </script>
+    <% } else { %>
+        <script>
+            window.onload = function () {
+                const labels = document.querySelectorAll('label')
+                for (let item of labels) {
+                    item.style.color = '#e2e2e2'
+                }
+            }
+        </script>
+
+    <% } %>
 </head>
 <body>

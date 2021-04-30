@@ -25,7 +25,8 @@ window.addEventListener('init-for-profile-page', () => {
     }
     const new_note_button = document.getElementById('new_note_button')
     const sync_button = document.getElementById('sync-button')
-    const change_theme_button = document.getElementById('change-theme-button')
+    const theme_form = document.getElementById('theme_form')
+    // const change_theme_button = document.getElementById('change-theme-button')
     new_note_button.addEventListener('click', (e) => {
         e.preventDefault()
         ipc.send('new-note')
@@ -34,12 +35,17 @@ window.addEventListener('init-for-profile-page', () => {
         e.preventDefault()
         ipc.send('go-on-sync-page')
     })
-    change_theme_button.addEventListener('change', (e) => {
+    theme_form.addEventListener('change', function (e) {
+        const data = new FormData(this)
+        const theme = data.get('theme')
+        ipc.send('change-theme', theme)
+    })
+/*    change_theme_button.addEventListener('change', (e) => {
         // Задержка, чтобы анимация переключения успела отработать
         setTimeout(() => {
             ipc.send('change-theme')
         }, 200)
-    })
+    })*/
 })
 
 window.addEventListener('init-for-note-page', () => {
