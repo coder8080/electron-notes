@@ -34,9 +34,11 @@ window.addEventListener('init-for-profile-page', () => {
         e.preventDefault()
         ipc.send('go-on-sync-page')
     })
-    change_theme_button.addEventListener('click', (e) => {
-        e.preventDefault()
-        ipc.send('change-theme')
+    change_theme_button.addEventListener('change', (e) => {
+        // Задержка, чтобы анимация переключения успела отработать
+        setTimeout(() => {
+            ipc.send('change-theme')
+        }, 200)
     })
 })
 
