@@ -1,4 +1,8 @@
 node_modules
 package-lock.json
 db.sqlite3
+notes_db.sqlite3
 .idea
+database_deploy.js
+dist
+dist/*

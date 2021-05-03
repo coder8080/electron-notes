@@ -13,7 +13,6 @@
 git clone https://github.com/coder8080/electron-notes
 cd electron-notes
 npm install
-node ./database_deploy.js
 npm start
 ```
 
@@ -21,7 +20,6 @@ npm start
 То есть нужно выполнить лишь:
 ```bash
 npm install
-node ./database_deploy.js
 npm start
 ```
 

@@ -1,13 +1,12 @@
 {
   "dependencies": {
     "ejs-electron": "^2.1.1",
-    "electron": "^12.0.2",
     "node-fetch": "^2.6.1",
     "sqlite3": "^5.0.2"
   },
   "name": "electron-notes",
   "description": "Настольный блокнот, написанный на node.js с использованием библиотеки electron",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "main": "main.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
@@ -22,5 +21,29 @@
   "bugs": {
     "url": "https://github.com/coder8080/electron-notes/issues"
   },
-  "homepage": "https://github.com/coder8080/electron-notes#readme"
+  "homepage": "https://github.com/coder8080/electron-notes#readme",
+  "build": {
+    "files": [
+      "**/*",
+      "!**/node_modules/*/{CHANGELOG.md,README.md,README,readme.md,readme}",
+      "!**/node_modules/*/{test,__tests__,tests,powered-test,example,examples}",
+      "!**/node_modules/*.d.ts",
+      "!**/node_modules/.bin",
+      "!**/*.{iml,o,hprof,orig,pyc,pyo,rbc,swp,csproj,sln,xproj}",
+      "!.editorconfig",
+      "!**/._*",
+      "!**/{.DS_Store,.git,.hg,.svn,CVS,RCS,SCCS,.gitignore,.gitattributes}",
+      "!**/{__pycache__,thumbs.db,.flowconfig,.idea,.vs,.nyc_output}",
+      "!**/{appveyor.yml,.travis.yml,circle.yml}",
+      "!**/{npm-debug.log,yarn.lock,.yarn-integrity,.yarn-metadata.json}",
+      "!stable/*",
+      "!db.sqlite3",
+      "!README.md",
+      "!.gitignore",
+      "!database_deploy.js"
+    ]
+  },
+  "devDependencies": {
+    "electron": "^12.0.6"
+  }
 }

@@ -6,8 +6,15 @@ const {app, BrowserWindow, ipcMain} = require('electron')
 const ejs = require('ejs-electron')
 const path = require('path')
 const sqlite = require('sqlite3')
-const db = new sqlite.Database('db.sqlite3')
+const fs = require('fs')
 const fetch = require('node-fetch')
+let exists = false
+let db
+if (fs.existsSync('notes_db.sqlite3'))
+{
+    exists = true
+    db = new sqlite.Database('notes_db.sqlite3')
+}
 
 // Объявляем переменную окна
 let win
@@ -125,13 +132,42 @@ function array_to_text(array) {
     return array.join('%*%')
 }
 
-// Открываем окно
-app.whenReady().then(() => {
-    createWindow()
-    if (BrowserWindow.getAllWindows().length === 0) {
+if (exists)
+{
+    app.whenReady().then(() => {
         createWindow()
-    }
-})
+        if (BrowserWindow.getAllWindows().length === 0) {
+            createWindow()
+        }
+    })
+}
+else {
+    fs.writeFileSync('notes_db.sqlite3', '')
+    db = new sqlite.Database('notes_db.sqlite3')
+    db.run('create table notes (id integer primary key, heading text, text text);', (err) => {
+        if (err) {
+            throw err
+        }
+        db.run('create table theme (id integer primary key, value varchar(10));', err => {
+            if (err) {
+                throw err
+            }
+            db.run(`insert into theme (value) values ('light');`, err => {
+                if (err) {
+                    throw err
+                }
+
+                exists = true
+                app.whenReady().then(() => {
+                    createWindow()
+                    if (BrowserWindow.getAllWindows().length === 0) {
+                        createWindow()
+                    }
+                })
+            })
+        })
+    })
+}
 
 ipcMain.on('view-note', (e, id) => {
     go_on_note_page(id)
