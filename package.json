@@ -9,7 +9,7 @@
   "version": "0.0.2",
   "main": "main.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "electron-builder -l",
     "start": "electron main.js"
   },
   "repository": {
@@ -38,12 +38,14 @@
       "!**/{npm-debug.log,yarn.lock,.yarn-integrity,.yarn-metadata.json}",
       "!stable/*",
       "!db.sqlite3",
+      "!notes_db.sqlite3",
       "!README.md",
       "!.gitignore",
       "!database_deploy.js"
     ]
   },
   "devDependencies": {
-    "electron": "^12.0.6"
+    "electron": "^12.0.6",
+    "electron-builder": "^22.10.5"
   }
 }

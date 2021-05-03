@@ -58,6 +58,14 @@
                     >
                     <label for="blue_theme">Синяя</label>
                 </div>
+                <div>
+                    <input type="radio" id="purple_theme" name="theme" value="purple"
+                    <% if (theme === 'purple') { %>
+                           checked
+                            <% } %>
+                    >
+                    <label for="purple_theme">Фиолетовая</label>
+                </div>
             </form>
         </div>
     </li>
@@ -82,12 +90,21 @@
                             display: flex;
                             flex-direction: column;
 ">
-                                <a style="cursor: pointer; display: inline" class="read">
+                                <a style="cursor: pointer;
+                                        display: inline;
+                                <% if (theme === 'red') { %>
+                                    color: black;
+                                <% } %>
+                                        " class="read">
                                     <i class="material-icons tiny">book</i>
                                     Читать
                                     <input type="hidden" value="<%= note.id %>">
                                 </a>
-                                <a style="cursor: pointer; display: inline" class="change">
+                                <a style="cursor: pointer;
+                                        display: inline;
+                                <% if (theme === 'red') { %>
+                                    color: black;
+                                <% } %>" class="change">
                                     <i class="material-icons tiny">edit</i>
                                     Изменить
                                     <input type="hidden" value="<%= note.id %>">

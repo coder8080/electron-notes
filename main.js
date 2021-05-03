@@ -31,7 +31,7 @@ function createWindow() {
         webPreferences: {
             preload: path.join(__dirname, 'js', 'preload.js')
         },
-        icon: path.join(__dirname, 'public', 'icon.png')
+        icon: path.join(__dirname, 'build', 'icon.png')
     })
     go_on_main()
     win.removeMenu()
