@@ -1,5 +1,4 @@
-/* Заметки на electron js. Похожим проектом является express-notes(принадлежащий мне же(я coder8080)).
-В будущем планируется возможность синхронизации приложения и сервера */
+/* Заметки на electron js. Похожим проектом является express-notes(принадлежащий мне же(я coder8080)) */
 
 // Получаем зависимости
 const {app, BrowserWindow, ipcMain} = require('electron')
@@ -105,31 +104,6 @@ function go_on_note_page(id) {
             console.log('error: no note with this id')
         }
     })
-}
-
-/**
- * Конвертация из текста в массив json элементов
- * @param {String} text - текст, который необходимо конвертировать
- * @returns {Array} - полученный массив
- * */
-function text_to_array(text) {
-    let data = text.split('%*%')
-    for (let i = 0; i < data.length; i++) {
-        data[i] = JSON.parse(data[i])
-    }
-    return data
-}
-
-/**
- * Конвертация массива json элементов в текст
- * @param {Array} array - массив, который нужно конвертировать
- * @return {String} - полученный текст
- * */
-function array_to_text(array) {
-    array.forEach((item, index) => {
-        array[index] = JSON.stringify(item)
-    })
-    return array.join('%*%')
 }
 
 if (exists)
@@ -249,15 +223,10 @@ ipcMain.on('sync', (e, address, login, password, type) => {
             console.log('app crashed when getting notes to sync')
             throw err
         }
-        if (data.length === 1) {
-            data = [data]
-        }
-        // Преобразуем в одну строку
-        const notes_text = array_to_text(data)
         // Отправляем запрос
         fetch(`${address}/sync`, {
             method: 'POST',
-            body: JSON.stringify({"login": login, "password": password, "notes": notes_text, "type": type}),
+            body: JSON.stringify({"login": login, "password": password, "notes": data, "type": type}),
             headers: {"Content-Type": "application/json"}
         }).then(response => {
             if (response.ok) {
@@ -279,7 +248,7 @@ ipcMain.on('sync', (e, address, login, password, type) => {
         }).then((data) => {
             // Добавление в базу данных полученных записей
             if (data) {
-                data = text_to_array(data)
+                data = JSON.parse(data).notes
                 if (type === 'hard-download') {
                     db.run(`delete from notes`, (err) => {
                         if (err) {
@@ -309,29 +278,6 @@ ipcMain.on('change-theme', (e, theme) => {
         }
         go_on_main()
     })
-    /*    // Получаем текущую тему
-        db.get(`select value from theme where id = 1;`, (err, data) => {
-            if (err) {
-                console.log('error when getting theme')
-                throw err
-            }
-            // Меняем тему
-            let theme;
-            if (data.value === 'light') {
-                theme = 'dark'
-            } else if (data.value === 'dark') {
-                theme = 'light'
-            } else {
-                console.log('error when changing theme')
-                return
-            }
-            db.run(`update theme set value = '${theme}' where id = 1;`, (err) => {
-                if (err) {
-                    throw err
-                }
-                go_on_main()
-            })
-        })*/
 })
 
 app.on('window-all-closed', () => {
