@@ -1,5 +1,3 @@
-/* Заметки на electron js. Похожим проектом является express-notes(принадлежащий мне же(я coder8080)) */
-
 // Получаем зависимости
 const {app, BrowserWindow, ipcMain} = require('electron')
 const ejs = require('ejs-electron')

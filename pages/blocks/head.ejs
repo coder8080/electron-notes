@@ -54,6 +54,7 @@
         <%- include('purple_theme.ejs') %>
     <% } %>
     <title><%= title %></title>
+    <!-- Иначе не работает, всё пробовал -->
     <% if (theme === 'light' || theme === 'red') { %>
         <script>
             window.onload = function () {
