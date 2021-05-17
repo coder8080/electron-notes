@@ -23,6 +23,12 @@
   },
   "homepage": "https://github.com/coder8080/electron-notes#readme",
   "build": {
+    "directories": {
+      "buildResources": "build"
+    },
+    "linux": {
+      "icon": "build/icon512x512.png"
+    },
     "files": [
       "**/*",
       "!**/node_modules/*/{CHANGELOG.md,README.md,README,readme.md,readme}",
@@ -37,6 +43,7 @@
       "!**/{appveyor.yml,.travis.yml,circle.yml}",
       "!**/{npm-debug.log,yarn.lock,.yarn-integrity,.yarn-metadata.json}",
       "!stable/*",
+      "build/icon512x512.png",
       "!db.sqlite3",
       "!notes_db.sqlite3",
       "!README.md",

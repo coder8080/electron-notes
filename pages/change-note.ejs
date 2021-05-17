@@ -9,10 +9,43 @@
             <input id='heading-input' type="text" value="<%= note.heading %>" name="heading" required>
             <label for="heading-input">Название</label>
         </div>
-        <div class="input-field">
-            <textarea class="materialize-textarea" id="text-input" name="text" required><%= note.text %></textarea>
-            <label for="text-input">Текст</label>
-        </div>
+        <% if (note.type === 'text') { %>
+            <div class="input-field">
+                <textarea class="materialize-textarea" id="text-input" name="text" required><%= note.value %></textarea>
+                <label for="text-input">Текст</label>
+            </div>
+        <% } else if (note.type === 'list') { %>
+            <div class="row">
+                <div class="col s10">
+                    <ul class="collection" id="list">
+                        <% for (let i = 0; i < note.value.length; i++) { %>
+                        <li class="collection-item" id="item-<%= i+1 %>">
+                            <div class="row" style="margin-bottom: 0 !important;">
+                                <div class="col s10">
+                                        <textarea id="textarea-<%= i + 1 %>"
+                                                  class="materialize-textarea"><%- note.value[i] %></textarea>
+                                </div>
+                                <div class="col s2 center">
+                                    <button class="waves-effect waves-light btn-floating"
+                                            onclick="remove_item('item-<%= i + 1 %>')" type="button">
+                                        <i class="material-icons left">remove</i>
+                                    </button>
+                                </div>
+                            </div>
+                        </li>
+                        <% } %>
+                    </ul>
+                </div>
+                <div class="col s2 center" style="height: 100%">
+                    <button class="waves-effect waves-light btn-floating" id="add-item-button">
+                        <i class="material-icons left">add</i>
+                    </button>
+                </div>
+            </div>
+            <input type="hidden" name="counter" value="<%= note.value.length %>">
+        <% } else { %>
+            <p>Ошибка: неизвестный тип записи (<%- note.type %>)</p>
+        <% } %>
         <div class="row">
             <div class="col s12 m6">
                 <button type="submit"
@@ -30,11 +63,18 @@
                 </a>
             </div>
         </div>
+        <input type="hidden" name="type" value="<%= note.type %>">
     </form>
 </div>
 <input type="hidden" id="id-input" value="<%= note.id %>" name="id">
 <script>
     const event = new Event('init-for-change-note-page')
     window.dispatchEvent(event)
+
+    function remove_item(id) {
+        console.log(id)
+        const item = document.getElementById(id)
+        item.remove()
+    }
 </script>
 <%- include('blocks/footer.ejs') %>

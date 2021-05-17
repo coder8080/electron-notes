@@ -8,11 +8,46 @@
             <input id='heading-input' type="text" name="heading" autocomplete="off" required>
             <label for="heading-input">Название</label>
         </div>
-        <div class="input-field">
-            <textarea class="materialize-textarea" id="text-input" name="text" required></textarea>
+        <h5>
+            Тип
+        </h5>
+        <p>
+            <input type="radio" name="type" id="text_type" value="text" checked>
+            <label for="text_type">Текст</label>
+        </p>
+        <p>
+            <input type="radio" name="type" id="list_type" value="list">
+            <label for="list_type">Список</label>
+        </p>
+        <div class="input-field" id="text-field">
+            <textarea class="materialize-textarea" id="text-input" name="text"></textarea>
             <label for="text-input">Текст</label>
         </div>
-        <button type="submit" class="waves-effect waves-light btn <% if (theme === 'dark') { %>blue-grey<% } %>">
+        <div id="list-field" class="row" style="display: none">
+            <div class="col s10">
+                <ul class="collection" id="list">
+                    <li class="collection-item">
+                        <div class="row" style="margin-bottom: 0 !important;">
+                            <div class="col s10">
+                                <textarea id="textarea-1" class="materialize-textarea"></textarea>
+                            </div>
+                            <div class="col s2 center">
+                                <button class="waves-effect waves-light btn-floating"
+                                        onclick="remove_item('item-1')" type="button">
+                                    <i class="material-icons left">remove</i>
+                                </button>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+            <div class="col s2 center" style="height: 100%">
+                <button class="waves-effect waves-light btn-floating" id="add-item-button">
+                    <i class="material-icons left">add</i>
+                </button>
+            </div>
+        </div>
+        <button type="submit" class="waves-effect waves-light btn">
             <i class="material-icons left">add</i>
             Создать
         </button>
@@ -20,7 +55,7 @@
             <br>
         </div>
         <button id="cancel-button"
-           class="btn <% if (theme === 'dark') { %>blue-grey<% } %> waves-effect waves-light">
+                class="btn waves-effect waves-light">
             <i class="material-icons left">cancel</i>
             Отмена
         </button>
@@ -29,5 +64,10 @@
 <script>
     const event = new Event('init-for-new-note-page')
     window.dispatchEvent(event)
+
+    function remove_item(id) {
+        const item = document.getElementById(id)
+        item.remove()
+    }
 </script>
 <%- include('blocks/footer.ejs') %>

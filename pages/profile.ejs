@@ -77,13 +77,19 @@
                 <div class="col s12 m6 l4">
                     <div class="card <% if (theme === 'light') { %>hoverable<% } %>">
                         <div class="card-content">
-                    <span class="card-title">
-                        <p class="one-line">
-                            <%= note.heading %>
-                        </p>
-                    </span>
+                            <span class="card-title">
+                                <p class="one-line">
+                                    <%= note.heading %>
+                                </p>
+                            </span>
                             <p class="one-line">
-                                <%= note.text %>
+                                <% if (note.type === 'text') { %>
+                                    <%= note.value %>
+                                <% } else if (note.type === 'list') { %>
+                                    <%= note.value[0] %>
+                                <% } else { %>
+                                    error: unknown type
+                                <% } %>
                             </p>
                             <div class="card-action" style="
                             padding-bottom: 0;

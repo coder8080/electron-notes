@@ -7,8 +7,9 @@ const fs = require('fs')
 const fetch = require('node-fetch')
 let exists = false
 let db
-if (fs.existsSync('notes_db.sqlite3'))
-{
+
+// Проверяем, существует ли база данных
+if (fs.existsSync('notes_db.sqlite3')) {
     exists = true
     db = new sqlite.Database('notes_db.sqlite3')
 }
@@ -16,7 +17,7 @@ if (fs.existsSync('notes_db.sqlite3'))
 // Объявляем переменную окна
 let win
 
-/* Функция создания окна */
+/** Функция создания окна */
 function createWindow() {
     // Задаём значение переменной
     win = new BrowserWindow({
@@ -28,13 +29,43 @@ function createWindow() {
         webPreferences: {
             preload: path.join(__dirname, 'js', 'preload.js')
         },
-        icon: path.join(__dirname, 'build', 'icon.png')
+        icon: path.join(__dirname, 'build', 'icon512x512.png')
     })
     go_on_main()
     win.removeMenu()
 }
 
-/* Функция переадресации на главную страницу */
+/* Так как sql не может просто так хранить кавычки, совпадающие с кавычками значения, я заменяю их на
+ключевое слово &quot */
+
+/** Стандартная функция sql escape
+ * @param {String} text - текст для записи в базу данных
+ * @return {String} отредактированный текст*/
+function sql_escape(text) {
+    return text.replaceAll(`'`, `&quot`)
+}
+
+/** Конвертировать текст из формата базы данных в обычный
+ * @param {String} text - текст, полученный из базы данных
+ * @return {String} - готовый текст*/
+function rm_escape(text) {
+    return text.replaceAll(`&quot`, `'`)
+}
+
+/** Перевод записи из формата базы данных в обычный
+ * @param {Object} note - запись*/
+function render_note_from_db(note) {
+    if (note.type === 'list') {
+        note.value = JSON.parse(note.value).items
+        for (let i = 0; i < note.value.length; i++) {
+            note.value[i] = rm_escape(note.value[i])
+        }
+    } else if (note.type === 'text') {
+        note.value = rm_escape(note.value)
+    }
+}
+
+/** Функция переадресации на главную страницу */
 function go_on_main() {
     db.all(`select * from notes`, (err, data) => {
         // Если произошла ошибка, то выкидываем её
@@ -49,10 +80,14 @@ function go_on_main() {
         if (data.length > 0) {
             are_notes = true
             // Если была получена одна запись, то превращаем её в массив
-            if (data [0] === undefined) {
+            if (data[0] === undefined) {
                 notes = [data]
             } else {
                 notes = data
+                for (let note of notes) {
+                    // Переводим записи в формат с обычными кавычками
+                    render_note_from_db(note)
+                }
             }
         } else {
             are_notes = false
@@ -91,6 +126,7 @@ function go_on_note_page(id) {
         }
         if (data) {
             // Отправляем пользователю страницу
+            render_note_from_db(data)
             ejs.data('note', data)
             win.loadFile(path.join(__dirname, 'pages/note.ejs')).then(err => {
                 if (err) {
@@ -104,19 +140,18 @@ function go_on_note_page(id) {
     })
 }
 
-if (exists)
-{
+if (exists) {
     app.whenReady().then(() => {
         createWindow()
         if (BrowserWindow.getAllWindows().length === 0) {
             createWindow()
         }
     })
-}
-else {
+} else {
+    // Если база денных ещё не создана, то создаём её
     fs.writeFileSync('notes_db.sqlite3', '')
     db = new sqlite.Database('notes_db.sqlite3')
-    db.run('create table notes (id integer primary key, heading text, text text);', (err) => {
+    db.run('create table notes (id integer primary key, heading text, type varchar(15), value text);', (err) => {
         if (err) {
             throw err
         }
@@ -168,8 +203,9 @@ ipcMain.on('new-note', () => {
     })
 })
 
-ipcMain.on('create-note', (e, heading, text) => {
-    db.run(`insert into notes (heading, text) values ('${heading}', '${text}');`, (err) => {
+ipcMain.on('create-note', (e, heading, type, value) => {
+    value = sql_escape(value)
+    db.run(`insert into notes (heading, type, value) values ('${heading}', '${type}', '${value}');`, (err) => {
         if (err) {
             console.log('app crashed when creating note with error:')
             throw err
@@ -184,6 +220,7 @@ ipcMain.on('go-on-change-note-page', (e, id) => {
             console.log('app crashed when getting info about note from db with error:')
             throw err
         }
+        render_note_from_db(data)
         ejs.data('note', data)
         win.loadFile(path.join(__dirname, 'pages', 'change-note.ejs')).then(err => {
             if (err) {
@@ -194,8 +231,9 @@ ipcMain.on('go-on-change-note-page', (e, id) => {
     })
 })
 
-ipcMain.on('change-note', (e, id, heading, text) => {
-    db.run(`update notes set heading = '${heading}', text = '${text}' where id = ${id};`, (err) => {
+ipcMain.on('change-note', (e, id, heading, type, value) => {
+    value = sql_escape(value)
+    db.run(`update notes set heading = '${heading}', type = '${type}', value = '${value}' where id = ${id};`, (err) => {
         if (err) {
             console.log('app crashed when updating info in database with error:')
             throw err
@@ -216,10 +254,14 @@ ipcMain.on('go-on-sync-page', () => {
 /* Синхронизация */
 ipcMain.on('sync', (e, address, login, password, type) => {
     // Получаем записи из базы данных
-    db.all('select heading, text from notes;', (err, data) => {
+    db.all(`select heading, value from notes where type = 'text';`, (err, data) => {
         if (err) {
             console.log('app crashed when getting notes to sync')
             throw err
+        }
+        // Перевод в старый формат (временное решение, позднее будет переделано)
+        for (let i = 0; i < data.length; i++) {
+            data[i].text = data[i].value
         }
         // Отправляем запрос
         fetch(`${address}/sync`, {

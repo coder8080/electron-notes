@@ -41,6 +41,10 @@
         .nav-wrapper {
             padding-left: 10px;
         }
+
+        li.collection-item {
+            background-color: transparent !important;
+        }
     </style>
     <% if (theme === 'dark') { %>
         <%- include('dark_theme.ejs') %>
@@ -50,7 +54,7 @@
         <%- include('red_theme.ejs') %>
     <% } else if (theme === 'blue') { %>
         <%- include('blue_theme.ejs') %>
-    <% } else if (theme === 'purple') {%>
+    <% } else if (theme === 'purple') { %>
         <%- include('purple_theme.ejs') %>
     <% } %>
     <title><%= title %></title>
