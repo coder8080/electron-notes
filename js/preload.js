@@ -174,7 +174,6 @@ window.addEventListener('init-for-sync-page', () => {
         const login = form_data.get('login')
         const password = form_data.get('password')
         const type = form_data.get('type')
-        alert("Примечание: синхронизация записей типа \"список\" пока не поддерживается.")
         status = ipc.sendSync('sync', address, login, password, type)
         if (status === 'success') {
             alert('Успешно синхронизировано')

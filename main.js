@@ -254,14 +254,14 @@ ipcMain.on('go-on-sync-page', () => {
 /* Синхронизация */
 ipcMain.on('sync', (e, address, login, password, type) => {
     // Получаем записи из базы данных
-    db.all(`select heading, value from notes where type = 'text';`, (err, data) => {
+    db.all(`select heading, value from notes;`, (err, data) => {
         if (err) {
             console.log('app crashed when getting notes to sync')
             throw err
         }
         // Перевод в старый формат (временное решение, позднее будет переделано)
         for (let i = 0; i < data.length; i++) {
-            data[i].text = data[i].value
+            data[i].text = JSON.parse(data[i].value).items.join(", ")
         }
         // Отправляем запрос
         fetch(`${address}/sync`, {
@@ -296,13 +296,13 @@ ipcMain.on('sync', (e, address, login, password, type) => {
                             throw err
                         }
                         for (const note of data) {
-                            db.run(`insert into notes (heading, text) values ('${note.heading}', '${note.text}')`)
+                            db.run(`insert into notes (heading, value, type) values ('${note.heading}', '${note.value}', 'text')`)
                         }
                     })
                 }
                 if (type === 'download' || type === 'upload-and-download') {
                     for (const note of data) {
-                        db.run(`insert into notes (heading, text) values ('${note.heading}', '${note.text}')`)
+                        db.run(`insert into notes (heading, value, type) values ('${note.heading}', '${note.text}', 'text')`)
                     }
                 }
             }
