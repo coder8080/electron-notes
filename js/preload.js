@@ -103,7 +103,9 @@ window.addEventListener('init-for-new-note-page', () => {
             for (let i = 1; i <= items_counter; i++) {
                 let textarea = document.getElementById(`textarea-${i}`)
                 if (textarea) {
-                    items.push(textarea.value)
+                    if (textarea.value !== '') {
+                        items.push(textarea.value)
+                    }
                 }
             }
             let json = JSON.stringify({"items": items})
@@ -133,7 +135,8 @@ window.addEventListener('init-for-new-note-page', () => {
 window.addEventListener('init-for-change-note-page', () => {
     try {
         items_counter = Number(document.querySelector('input[name="counter"]').value)
-    } catch {}
+    } catch {
+    }
     const id = document.getElementById('id-input').value
     const form = document.getElementById('change-note-form')
     const cancel_button = document.getElementById('cancel-button')
@@ -150,7 +153,9 @@ window.addEventListener('init-for-change-note-page', () => {
             for (let i = 1; i <= items_counter; i++) {
                 let textarea = document.getElementById(`textarea-${i}`)
                 if (textarea) {
-                    items.push(textarea.value)
+                    if (textarea.value !== '') {
+                        items.push(textarea.value)
+                    }
                 }
             }
             let json = JSON.stringify({"items": items})

@@ -16,7 +16,10 @@
     "type": "git",
     "url": "git+https://github.com/coder8080/electron-notes.git"
   },
-  "author": "coder8080",
+  "author": {
+    "name": "coder8080",
+    "email": "coder8080@mail.ru"
+  },
   "license": "SEE LICENSE IN LICENSE",
   "bugs": {
     "url": "https://github.com/coder8080/electron-notes/issues"
@@ -27,7 +30,7 @@
       "buildResources": "build"
     },
     "linux": {
-      "icon": "build/icon512x512.png"
+      "icon": "build/icon.icns"
     },
     "files": [
       "**/*",
@@ -42,7 +45,6 @@
       "!**/{__pycache__,thumbs.db,.flowconfig,.idea,.vs,.nyc_output}",
       "!**/{appveyor.yml,.travis.yml,circle.yml}",
       "!**/{npm-debug.log,yarn.lock,.yarn-integrity,.yarn-metadata.json}",
-      "!stable/*",
       "build/icon512x512.png",
       "!db.sqlite3",
       "!notes_db.sqlite3",
