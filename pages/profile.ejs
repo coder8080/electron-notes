@@ -1,13 +1,4 @@
 <%- include('blocks/head.ejs', {title: 'Ваши записи'}) %>
-<style>
-    .menu-button {
-        cursor: pointer;
-    }
-
-    .nav-wrapper {
-        padding-left: 10px;
-    }
-</style>
 <div class="row">
     <div class="col s1 left" style="padding-top: 9px">
         <a data-activates="menu" class="menu-button"><i class="material-icons small">settings</i></a>
@@ -72,9 +63,9 @@
 </ul>
 <div class="center" style="padding-left: 1rem; padding-right: 1rem">
     <% if (are_notes === true) { %>
-        <div class="row">
+        <div class="grid" data-masonry='{ "itemSelector": ".grid-item", "columnWidth": 250, "fitWidth": true }' style="width: 100%">
             <% notes.forEach((note) => { %>
-                <div class="col s12 m6 l4">
+                <div class="grid-item">
                     <div class="card <% if (theme === 'light') { %>hoverable<% } %>">
                         <div class="card-content">
                             <span class="card-title">
@@ -82,7 +73,7 @@
                                     <%= note.heading %>
                                 </p>
                             </span>
-                            <p class="one-line">
+                            <p class="four-lines">
                                 <% if (note.type === 'text') { %>
                                     <%= note.value %>
                                 <% } else if (note.type === 'list') { %>
