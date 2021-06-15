@@ -1,22 +1,46 @@
 <%- include('blocks/head.ejs', {title: 'Ваши записи'}) %>
-<div class="container center">
-    <h4 class="header">Синхронизация локальных записей с облаком</h4>
+<style>
+    .icon-and-input {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: nowrap;
+        width: 100%;
+    }
+
+    .material-icons {
+        margin-right: 5px;
+    }
+
+    .btn {
+        padding: 10px 30px 10px 30px;
+        border-radius: 15px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 200px;
+        margin-bottom: 20px;
+    }
+</style>
+<div class="center">
+    <h2 class="header">Синхронизация локальных записей с облаком</h2>
 </div>
 <div class="container">
     <form id="sync-form">
-        <div class="input-field">
-            <i class="material-icons prefix">language</i>
-            <input type="text" name="address" id="address-input" autocomplete="off" required>
-            <label for="address-input">Адрес сервера</label>
-            <span class="helper-text">
-                Так как у проекта нет финансирования, нет официального сервера. Сюда вы должны ввести адрес сервера, с которым хотите провести синхронизацию, например: http://localhost:3000.
-                На сервере должен быть запущен <a
-                        href="https://github.com/coder8080/express-notes">этот</a> проект.</span>
+        <div class="icon-and-input">
+            <i class="material-icons">language</i>
+            <div class="input-group">
+                <input type="text" placeholder=" " name="address" id="address-input" class="form-input"
+                       autocomplete="off" required>
+                <label for="address-input" class="form-label">Адрес сервера</label>
+            </div>
         </div>
         <span class="helper-text">
-            Адрес сервера должен быть указан на главной странице сайта.
-        </span>
-        <span class="helper-text">Совет: не перепутайте протокол безопасности (http:// и https://) и при необходимости не забудьте указать порт (:3000)</span>
+            Так как у проекта нет финансирования, нет официального сервера. Сюда вы должны ввести адрес сервера, с которым хотите провести синхронизацию, например: http://localhost:3000.
+            На сервере должен быть запущен <a
+                    href="https://github.com/coder8080/express-notes">этот</a> проект.</span><br>
+        Адрес сервера должен быть указан на главной странице сайта. <br>
+        Совет: не перепутайте протокол безопасности (http:// и https://) и при необходимости не забудьте указать порт
+        (:3000)
         <p>
             <input name="type" type="radio" value="upload" id="upload">
             <label for="upload">Отправить новые локальные записи на сервер</label>
@@ -39,33 +63,28 @@
             <label for="hard-download">Скачать записи с сервера и удалить другие (полная синхронизация с
                 сервером)</label>
         </p>
-        <div class="input-field">
-            <i class="material-icons prefix">account_circle</i>
-            <input type="text" name="login" id='login-input' autocomplete="off" required>
-            <label for="login-input">Логин</label>
-        </div>
-        <div class="input-field">
-            <i class="material-icons prefix">lock</i>
-            <input type="password" name="password" id="password-input" required>
-            <label for="password-input">Пароль</label>
-        </div>
-        <div class="row">
-            <div class="col s12 m12 l6">
-                <button type="submit" class="btn <% if (theme === 'dark') { %>blue-grey<% } %> waves-effect waves-light">
-                    <i class="material-icons left">cloud</i>
-                    Синхронизировать
-                </button>
+        <div class="icon-and-input" style="margin-top: 30px;">
+            <i class="material-icons">account_circle</i>
+            <div class="input-group">
+                <input type="text" placeholder=" " class="form-input" name="login" id='login-input' autocomplete="off"
+                       required>
+                <label for="login-input" class="form-label">Логин</label>
             </div>
-            <div class="col s12 m12 l6">
-                <div class="hide-on-large-only">
-                    <br>
-                </div>
-                <button type="button" class="btn <% if (theme === 'dark') { %>blue-grey<% } %> waves-effect waves-light"
-                   id="cancel-button">
-                    <i class="material-icons left">cancel</i>
-                    Отмена
-                </button>
+        </div>
+        <div class="icon-and-input" style="margin-top: 20px;">
+            <i class="material-icons">lock</i>
+            <div class="input-group">
+                <input type="password" placeholder=" " class="form-input" name="password" id="password-input" required>
+                <label for="password-input" class="form-label">Пароль</label>
             </div>
+        </div>
+        <div class="btn" id="submit">
+            <i class="material-icons btn-icon">cloud</i>
+            Синхронизировать
+        </div>
+        <div class="btn" id="cancel-button">
+            <i class="material-icons btn-icon">cancel</i>
+            Отмена
         </div>
     </form>
 </div>

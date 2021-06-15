@@ -1,16 +1,44 @@
 <%- include('blocks/head.ejs', {title: 'Создать запись'}) %>
+<style>
+    #text-input {
+        font-size: 20px;
+        background: transparent;
+        resize: none;
+        outline: none;
+        width: 100%;
+        height: 250px;
+        padding: 5px;
+        border-radius: 10px;
+        margin-bottom: 20px;
+    }
+
+    #text-input:focus {
+        outline: none;
+    }
+
+    .btn {
+        padding: 10px 30px 10px 30px;
+        border-radius: 15px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 200px;
+        margin-bottom: 20px;
+    }
+</style>
 <div class="container center">
     <h3 class="header">Создать запись</h3>
 </div>
 <div class="container">
     <form id="create-note-form">
-        <div class="input-field">
-            <input id='heading-input' type="text" name="heading" autocomplete="off" required>
-            <label for="heading-input">Название</label>
+        <div class="input-group">
+            <input id='heading-input' type="text" name="heading" class="form-input" autocomplete="off" placeholder=" "
+                   required>
+            <label for="heading-input" class="form-label">Название</label>
         </div>
-        <h5>
+        <h2>
             Тип
-        </h5>
+        </h2>
         <p>
             <input type="radio" name="type" id="text_type" value="text" checked>
             <label for="text_type">Текст</label>
@@ -20,45 +48,36 @@
             <label for="list_type">Список</label>
         </p>
         <div class="input-field" id="text-field">
-            <textarea class="materialize-textarea" id="text-input" name="text"></textarea>
             <label for="text-input">Текст</label>
+            <textarea id="text-input" name="text"></textarea>
         </div>
-        <div id="list-field" class="row" style="display: none">
-            <div class="col s10">
-                <ul class="collection" id="list">
-                    <li class="collection-item">
-                        <div class="row" style="margin-bottom: 0 !important;">
-                            <div class="col s10">
-                                <textarea id="textarea-1" class="materialize-textarea"></textarea>
-                            </div>
-                            <div class="col s2 center">
-                                <button class="waves-effect waves-light btn-floating"
-                                        onclick="remove_item('item-1')" type="button">
-                                    <i class="material-icons left">remove</i>
-                                </button>
-                            </div>
+        <div id="list-field" style="display: none">
+            <div id="items">
+                <div class="collection-item" id="item-1">
+                    <div class="textarea-field">
+                        <textarea id="textarea-1" class="item-textarea"></textarea>
+                    </div>
+                    <div class="remove-button-field">
+                        <div class="rounded-btn" onclick="remove_item('item-1')">
+                            <i class="material-icons">remove</i>
                         </div>
-                    </li>
-                </ul>
+                    </div>
+                </div>
             </div>
-            <div class="col s2 center" style="height: 100%">
-                <button class="waves-effect waves-light btn-floating" id="add-item-button">
+            <div id="add-item-button-field">
+                <div class="rounded-btn" id="add-item-button">
                     <i class="material-icons left">add</i>
-                </button>
+                </div>
             </div>
         </div>
-        <button type="submit" class="waves-effect waves-light btn">
-            <i class="material-icons left">add</i>
+        <div id="submit" class="btn">
+            <i class="material-icons btn-icon">add</i>
             Создать
-        </button>
-        <div class="hide-on-med-and-up">
-            <br>
         </div>
-        <button id="cancel-button"
-                class="btn waves-effect waves-light">
-            <i class="material-icons left">cancel</i>
+        <div id="cancel-button" class="btn">
+            <i class="material-icons btn-icon">cancel</i>
             Отмена
-        </button>
+        </div>
     </form>
 </div>
 <script>
@@ -66,13 +85,11 @@
     window.dispatchEvent(event)
 
     function remove_item(id) {
-        const ul = document.getElementById('list')
-        if (ul.children.length > 1)
-        {
+        const items = document.getElementById('items')
+        if (items.children.length > 1) {
             const item = document.getElementById(id)
             item.remove()
-        }
-        else {
+        } else {
             alert('В списке должен быть хотя бы один элемент.')
         }
     }

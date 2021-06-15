@@ -5,24 +5,9 @@
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <link rel="stylesheet" href="./materialize/css/materialize.min.css">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-    <script type="text/javascript" src="./materialize/js/jquery-2.1.1.min.js"></script>
-    <script src="./materialize/js/materialize.min.js"></script>
     <script src="./materialize/js/masonry.min.js"></script>
     <style>
-        .menu-button {
-            cursor: pointer;
-        }
-
-        .nav-wrapper {
-            padding-left: 10px;
-        }
-
-        input[type="text"], input[type="password"], textarea {
-            font-size: large !important;
-        }
-
         .four-lines {
             text-overflow: ellipsis;
             overflow: hidden;
@@ -47,33 +32,114 @@
             box-orient: vertical;
         }
 
-        .card {
-            border-radius: 1rem;
+        .btn-icon {
+            margin-right: 8px;
+        }
+
+        .center {
+            text-align: center;
+        }
+
+        body {
+            font-family: "Roboto", sans-serif;
+        }
+
+        .container {
+            padding: 15px;
+            height: 100%;
         }
 
         .btn {
-            border-radius: 1rem;
-        }
-
-        .menu-button {
             cursor: pointer;
         }
 
-        .nav-wrapper {
-            padding-left: 10px;
+        .form-input {
+            font-size: 20px;
+            padding-bottom: 5px;
+            outline: none;
+            background: transparent;
+            transition: 0.3s;
+            width: 100%;
         }
 
-        li.collection-item {
-            background-color: transparent !important;
+        .form-input:focus {
+            outline: none;
+            border: none;
+            border-bottom: 1px solid blue;
         }
 
-        .grid-item {
+        .input-group {
+            width: 100%;
+            position: relative;
+            margin-bottom: 20px;
+        }
+
+        .form-label {
+            position: absolute;
+            left: 0;
+            top: 0;
+            font-size: 20px;
+            transition: 0.3s;
+        }
+
+        .form-input:focus ~ label,
+        .form-input:not(:placeholder-shown) ~ label {
+            top: -20px;
+            font-size: 15px;
+        }
+
+        .textarea-field {
+            width: 100vw;
+            padding: 30px;
+        }
+
+        .item-textarea {
+            height: 80px;
+            min-height: 80px;
+            width: 100%;
+            resize: vertical;
+            background: transparent;
+            outline: none;
+            border-radius: 10px;
             padding: 10px;
-            width: 250px;
+            font-size: 15px;
         }
 
-        .grid {
-            margin: 0 auto;
+        .item-textarea:focus {
+            outline: none;
+        }
+
+        .remove-button-field {
+            width: 80px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .collection-item {
+            display: flex;
+            flex-direction: row;
+            flex-wrap: nowrap;
+        }
+
+        .rounded-btn {
+            border-radius: 50%;
+            font-size: 10px;
+            width: 30px;
+            height: 30px;
+            padding: 10px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+        }
+
+        #add-item-button-field {
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 15px;
         }
     </style>
     <% if (theme === 'dark') { %>
@@ -87,27 +153,6 @@
     <% } else if (theme === 'purple') { %>
         <%- include('purple_theme.ejs') %>
     <% } %>
-    <title><%= title %></title>
-    <!-- Иначе не работает, всё пробовал -->
-    <% if (theme === 'light' || theme === 'red') { %>
-        <script>
-            window.onload = function () {
-                const labels = document.querySelectorAll('label')
-                for (let item of labels) {
-                    item.style.color = 'black'
-                }
-            }
-        </script>
-    <% } else { %>
-        <script>
-            window.onload = function () {
-                const labels = document.querySelectorAll('label')
-                for (let item of labels) {
-                    item.style.color = '#e2e2e2'
-                }
-            }
-        </script>
-
-    <% } %>
+    <title>electron-notes</title>
 </head>
 <body>

@@ -33,6 +33,7 @@ function createWindow() {
     })
     go_on_main()
     win.removeMenu()
+    // win.openDevTools()
 }
 
 /* Так как sql не может просто так хранить кавычки, совпадающие с кавычками значения, я заменяю их на
@@ -253,15 +254,22 @@ ipcMain.on('go-on-sync-page', () => {
 
 /* Синхронизация */
 ipcMain.on('sync', (e, address, login, password, type) => {
+    if (address === '' && login === '' && password === '')
+    {
+        e.returnValue = 'required'
+        return
+    }
     // Получаем записи из базы данных
-    db.all(`select heading, value from notes;`, (err, data) => {
+    db.all(`select heading, value, type from notes;`, (err, data) => {
         if (err) {
             console.log('app crashed when getting notes to sync')
             throw err
         }
         // Перевод в старый формат (временное решение, позднее будет переделано)
         for (let i = 0; i < data.length; i++) {
-            data[i].text = JSON.parse(data[i].value).items.join(", ")
+            if (data[i].type === 'list') {
+                data[i].text = JSON.parse(data[i].value).items.join(", ")
+            }
         }
         // Отправляем запрос
         fetch(`${address}/sync`, {

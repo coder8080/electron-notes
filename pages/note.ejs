@@ -1,70 +1,62 @@
 <%- include('blocks/head.ejs', {title: note.heading}) %>
-<div class="container center">
+<style>
+    .btn {
+        padding: 10px 30px 10px 30px;
+        border-radius: 15px;
+        min-width: 1px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 140px;
+        margin-bottom: 20px;
+    }
+</style>
+<div class="center">
     <h3 class="header">
         <%= note.heading %>
     </h3>
 </div>
 <div class="container">
     <% if (note.value.length >= 500) { %>
-        <h5>
-            <a href="/change-note/<%= note.id %>"
-               class="btn <% if (theme === 'dark') { %>blue-grey<% } %> waves-effect waves-light">
-                <i class="material-icons left">edit</i>
-                Изменить
-            </a>
-        </h5>
-        <h5>
-            <a href="/" class="btn <% if (theme === 'dark') { %>blue-grey<% } %> waves-effect waves-light">На
-                главную</a>
-        </h5>
-        <h5>
-            <a onclick="ask_for_remove()"
-               class="btn <% if (theme === 'dark') { %>blue-grey<% } %> waves-effect waves-light">Удалить</a>
-        </h5>
+        <div class="btn change-button">
+            <i class="material-icons btn-icon">edit</i>
+            Изменить
+        </div>
+        <div class="btn go-on-main-button">
+            <i class="material-icons btn-icon">home</i>
+            На главную
+        </div>
+        <div class="btn remove-button">
+            <i class="material-icons btn-icon">delete</i>
+            Удалить
+        </div>
     <% } %>
     <% if(note.type === 'text') { %>
-        <p style="font-size: medium"><%- note.value.replaceAll('\n', '<br>') %></p>
+        <p id="text"><%- note.value.replaceAll('\n', '<br>') %></p>
     <% } else if (note.type === 'list') { %>
         <ul class="collection">
             <% for (const item of note.value) { %>
-            <li class="collection-item">
-                <p>
-                    <%= item %>
-                </p>
-            </li>
+                <li class="collection-item">
+                    <p>
+                        <%= item %>
+                    </p>
+                </li>
             <% } %>
         </ul>
     <% } else { %>
         <p>Ошибка - неизвестный тип(<%= note.type %>)</p>
     <% } %>
-    <div class="row">
-        <div class="col s12 m12 l4 center">
-            <h5>
-                <a class="btn <% if (theme === 'dark') { %>blue-grey<% } %> waves-effect waves-light"
-                   id="change-button">
-                    <i class="material-icons left">edit</i>
-                    Изменить
-                </a>
-            </h5>
-        </div>
-        <div class="col s12 m12 l4 center">
-            <h5>
-                <a class="btn <% if (theme === 'dark') { %>blue-grey<% } %> waves-effect waves-light"
-                   id="go-on-main-button">
-                    <i class="material-icons left">home</i>
-                    На главную
-                </a>
-            </h5>
-        </div>
-        <div class="col s12 m12 l4 center">
-            <h5>
-                <a class="btn <% if (theme === 'dark') { %>blue-grey<% } %> waves-effect waves-light"
-                   id="remove-button">
-                    <i class="material-icons left">delete</i>
-                    Удалить
-                </a>
-            </h5>
-        </div>
+    <div class="btn change-button">
+        <i class="material-icons btn-icon">edit</i>
+        Изменить
+    </div>
+    <div class="btn go-on-main-button">
+        <i class="material-icons btn-icon">home</i>
+        На главную
+    </div>
+    <div class="btn remove-button">
+        <i class="material-icons btn-icon">delete</i>
+        Удалить
     </div>
 </div>
 <input type="hidden" id="id-input" value="<%= note.id %>" name="id">

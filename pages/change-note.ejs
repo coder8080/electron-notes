@@ -1,66 +1,86 @@
 <%- include('blocks/head.ejs', {title: 'Изменить запись'}) %>
+<style>
+    label:not(.form-label) {
+        font-size: 20px;
+    }
+
+    #text-input {
+        font-size: 20px;
+        background: transparent;
+        resize: none;
+        outline: none;
+        width: 100%;
+        height: 250px;
+        padding: 5px;
+        border-radius: 10px;
+        margin-bottom: 20px;
+    }
+
+    #text-input:focus {
+        outline: none;
+    }
+
+    .btn {
+        padding: 10px 30px 10px 30px;
+        border-radius: 15px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 200px;
+        margin-bottom: 20px;
+    }
+</style>
 <div class="container center">
-    <h3 class="header">Изменить запись "<%= note.heading %>"</h3>
+    <h2>Изменить запись "<%= note.heading %>"</h2>
 </div>
 <div class="container">
     <form id="change-note-form">
-        <div class="input-field">
-            <input type="hidden">
-            <input id='heading-input' type="text" value="<%= note.heading %>" name="heading" required>
-            <label for="heading-input">Название</label>
+        <div class="input-group">
+            <input id='heading-input' placeholder=" " type="text" value="<%= note.heading %>" name="heading"
+                   class="form-input" required>
+            <label for="heading-input" class="form-label">Название</label>
         </div>
         <% if (note.type === 'text') { %>
-            <div class="input-field">
-                <textarea class="materialize-textarea" id="text-input" name="text" required><%= note.value %></textarea>
-                <label for="text-input">Текст</label>
-            </div>
+            <label for="text-input">Текст</label>
+            <br>
+            <textarea id="text-input" name="text" required><%= note.value %></textarea>
         <% } else if (note.type === 'list') { %>
-            <div class="row">
-                <div class="col s10">
-                    <ul class="collection" id="list">
-                        <% for (let i = 0; i < note.value.length; i++) { %>
-                        <li class="collection-item" id="item-<%= i+1 %>">
-                            <div class="row" style="margin-bottom: 0 !important;">
-                                <div class="col s10">
-                                        <textarea id="textarea-<%= i + 1 %>"
-                                                  class="materialize-textarea"><%- note.value[i] %></textarea>
-                                </div>
-                                <div class="col s2 center">
-                                    <button class="waves-effect waves-light btn-floating"
-                                            onclick="remove_item('item-<%= i + 1 %>')" type="button">
-                                        <i class="material-icons left">remove</i>
-                                    </button>
-                                </div>
+            <div id="items">
+                <% for (let i = 0; i < note.value.length; i++) { %>
+                    <div class="collection-item" id="item-<%= i + 1 %>">
+                        <div class="textarea-field">
+                            <textarea id="textarea-<%= i + 1 %>" class="item-textarea"><%- note.value[i] %></textarea>
+                        </div>
+                        <div class="remove-button-field">
+                            <div class="rounded-btn" onclick="remove_item('item-<%= i + 1 %>')">
+                                <i class="material-icons">remove</i>
                             </div>
-                        </li>
-                        <% } %>
-                    </ul>
-                </div>
-                <div class="col s2 center" style="height: 100%">
-                    <button class="waves-effect waves-light btn-floating" id="add-item-button">
-                        <i class="material-icons left">add</i>
-                    </button>
+                        </div>
+                    </div>
+                <% } %>
+            </div>
+            <div id="add-item-button-field">
+                <div class="rounded-btn" id="add-item-button">
+                    <i class="material-icons left">add</i>
                 </div>
             </div>
             <input type="hidden" name="counter" value="<%= note.value.length %>">
         <% } else { %>
             <p>Ошибка: неизвестный тип записи (<%- note.type %>)</p>
         <% } %>
+        <div id="submit" class="btn">
+            <i class="material-icons btn-icon">save</i>
+            Сохранить изменения
+        </div>
+        <div id="cancel-button" class="btn">
+            <i class="material-icons btn-icon">cancel</i>
+            Отмена
+        </div>
         <div class="row">
             <div class="col s12 m6">
-                <button type="submit"
-                        class="btn <% if (theme === 'dark') { %>blue-grey<% } %> waves-effect waves-light">
-                    <i class="material-icons left">save</i>
-                    Сохранить изменения
-                </button>
             </div>
             <div class="col s12 m6">
                 <div class="hide-on-med-and-up"><br></div>
-                <a id="cancel-button"
-                   class="btn <% if (theme === 'dark') { %>blue-grey<% } %> waves-effect waves-light">
-                    <i class="material-icons left">cancel</i>
-                    Отмена
-                </a>
             </div>
         </div>
         <input type="hidden" name="type" value="<%= note.type %>">
@@ -73,12 +93,10 @@
 
     function remove_item(id) {
         const ul = document.getElementById('list')
-        if (ul.children.length > 1)
-        {
+        if (ul.children.length > 1) {
             const item = document.getElementById(id)
             item.remove()
-        }
-        else {
+        } else {
             alert('В списке должен быть хотя бы один элемент.')
         }
     }

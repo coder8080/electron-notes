@@ -1,78 +1,230 @@
 <%- include('blocks/head.ejs', {title: 'Ваши записи'}) %>
-<div class="row">
-    <div class="col s1 left" style="padding-top: 9px">
-        <a data-activates="menu" class="menu-button"><i class="material-icons small">settings</i></a>
+<style>
+    .navbar {
+        width: 100%;
+        height: 60px;
+        position: absolute;
+        top: 0;
+        left: 0;
+        display: flex;
+        flex-direction: row;
+        flex-wrap: nowrap;
+    }
+
+    .navbar-icon {
+        height: 100%;
+        width: 60px;
+    }
+
+    .navbar-text {
+        height: 100%;
+        padding-right: 60px;
+        width: 100vw;
+        font-size: 30px;
+    }
+
+    .vertical-center {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .navbar-spacer {
+        height: 60px;
+        width: 100%;
+    }
+
+    #menu {
+        width: 300px;
+        min-width: 300px;
+        height: 100%;
+        position: fixed;
+        top: 0;
+        left: -300px;
+        z-index: 1;
+        /*animation-fill-mode: forwards;*/
+    }
+
+    #menu-button {
+        cursor: pointer;
+    }
+
+    .menu-item-heading {
+        font-size: 25px;
+        margin-bottom: 20px;
+    }
+
+    .card {
+        border-radius: 1rem;
+        padding: 15px;
+    }
+
+    .card-title {
+        text-align: center;
+        font-size: 20px;
+    }
+
+    .card-action {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .card-content > p {
+        text-indent: 15px;
+    }
+
+    .read {
+        margin-bottom: 5px;
+    }
+
+    .grid-item {
+        width: 250px;
+        max-width: 250px;
+    }
+
+    .grid {
+        width: 100%;
+        margin: 0 auto;
+    }
+
+    #dimming {
+        position: fixed;
+        width: 100%;
+        height: 100%;
+        top: 0;
+        left: 0;
+        background-color: black;
+        opacity: 0.5;
+    }
+
+    .buttons-group {
+        width: 100%;
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        margin-top: 50px;
+    }
+
+    .button-container {
+        width: 50%;
+        display: flex;
+        justify-content: center;
+    }
+
+    .btn {
+        padding: 10px 30px 10px 30px;
+        border-radius: 15px;
+        min-width: 1px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 180px;
+    }
+
+    @keyframes menu-out {
+        from {
+            left: -300px
+        }
+        to {
+            left: 0
+        }
+    }
+
+    @keyframes menu-in {
+        from {
+            left: 0
+        }
+        to {
+            left: -300px
+        }
+    }
+
+    .menu-author {
+        position: absolute;
+        bottom: 5px;
+        color: gray;
+        width: 300px;
+        left: 0;
+        text-align: center;
+    }
+
+    .read, .change {
+        cursor: pointer;
+    }
+</style>
+<div class="navbar">
+    <div class="navbar-icon vertical-center">
+        <i id="menu-button" class="material-icons">settings</i>
     </div>
-    <div class="col s10 center">
-        <h5>
-            Ваши записи
-        </h5>
+    <div class="navbar-text vertical-center">
+        Ваши записи
     </div>
-    <div class="col s1"></div>
 </div>
-<ul class="side-nav" id="menu">
-    <li>
-        <div class="container">
-            <h5>
-                Тема:
-            </h5>
-            <form id="theme_form">
-                <div>
-                    <input type="radio" id="light_theme" name="theme" value="light"
-                    <% if (theme === 'light') { %>
-                           checked
-                            <% } %>
-                    >
-                    <label for="light_theme">Стандартная светлая</label>
-                </div>
-                <div>
-                    <input type="radio" id="dark_theme" name="theme" value="dark"
-                    <% if (theme === 'dark') { %>
-                           checked
-                            <% } %>
-                    >
-                    <label for="dark_theme">Стандартная тёмная</label>
-                </div>
-                <div>
-                    <input type="radio" id="red_theme" name="theme" value="red"
-                    <% if (theme === 'red') { %>
-                           checked
-                            <% } %>
-                    >
-                    <label for="red_theme">Красная</label>
-                </div>
-                <div>
-                    <input type="radio" id="blue_theme" name="theme" value="blue"
-                    <% if (theme === 'blue') { %>
-                           checked
-                            <% } %>
-                    >
-                    <label for="blue_theme">Синяя</label>
-                </div>
-                <div>
-                    <input type="radio" id="purple_theme" name="theme" value="purple"
-                    <% if (theme === 'purple') { %>
-                           checked
-                            <% } %>
-                    >
-                    <label for="purple_theme">Фиолетовая</label>
-                </div>
-            </form>
+<div class="navbar-spacer"></div>
+<div id="menu">
+    <div class="container">
+        <div class="menu-item-heading">
+            Тема:
         </div>
-    </li>
-</ul>
-<div class="center" style="padding-left: 1rem; padding-right: 1rem">
-    <% if (are_notes === true) { %>
-        <div class="grid" data-masonry='{ "itemSelector": ".grid-item", "columnWidth": 250, "fitWidth": true }' style="width: 100%">
-            <% notes.forEach((note) => { %>
-                <div class="grid-item">
-                    <div class="card <% if (theme === 'light') { %>hoverable<% } %>">
+        <form id="theme_form">
+            <input type="radio" id="light_theme" name="theme" value="light"
+            <% if (theme === 'light') { %>
+                   checked
+                    <% } %>
+            >
+            <label for="light_theme">Стандартная светлая</label>
+            <br>
+            <input type="radio" id="dark_theme" name="theme" value="dark"
+            <% if (theme === 'dark') { %>
+                   checked
+                    <% } %>
+            >
+            <label for="dark_theme">Стандартная тёмная</label>
+            <!--            <br>
+            <input type="radio" id="red_theme" name="theme" value="red"
+            <% if (theme === 'red') { %>
+                   checked
+                    <% } %>
+            >
+            <label for="red_theme">Красная</label>
+            <input type="radio" id="blue_theme" name="theme" value="blue"
+            <% if (theme === 'blue') { %>
+                   checked
+                    <% } %>
+            >
+            <br>
+            <label for="blue_theme">Синяя</label>
+            <div>
+                <input type="radio" id="purple_theme" name="theme" value="purple"
+                <% if (theme === 'purple') { %>
+                       checked
+                        <% } %>
+                >
+                <label for="purple_theme">Фиолетовая</label>
+            </div>-->
+            <br>
+            <br>
+            <i>
+                Цветные темы будут адаптированы под новый дизайн в течении месяца.
+            </i>
+        </form>
+        <div class="menu-author center">
+            created by coder8080 in 2021
+        </div>
+    </div>
+</div>
+<% if (are_notes === true) { %>
+    <div class="grid" data-masonry='{ "itemSelector": ".grid-item", "columnWidth": 250, "fitWidth": true}'>
+        <% notes.forEach((note) => { %>
+            <div class="grid-item">
+                <div class="container">
+                    <div class="card">
                         <div class="card-content">
-                            <span class="card-title">
+                            <div class="card-title">
                                 <p class="one-line">
                                     <%= note.heading %>
                                 </p>
-                            </span>
+                            </div>
                             <p class="four-lines">
                                 <% if (note.type === 'text') { %>
                                     <%= note.value %>
@@ -82,26 +234,13 @@
                                     error: unknown type
                                 <% } %>
                             </p>
-                            <div class="card-action" style="
-                            padding-bottom: 0;
-                            display: flex;
-                            flex-direction: column;
-">
-                                <a style="cursor: pointer;
-                                        display: inline;
-                                <% if (theme === 'red') { %>
-                                    color: black;
-                                <% } %>
-                                        " class="read">
+                            <div class="card-action">
+                                <a class="read vertical-center">
                                     <i class="material-icons tiny">book</i>
                                     Читать
                                     <input type="hidden" value="<%= note.id %>">
                                 </a>
-                                <a style="cursor: pointer;
-                                        display: inline;
-                                <% if (theme === 'red') { %>
-                                    color: black;
-                                <% } %>" class="change">
+                                <a class="change vertical-center">
                                     <i class="material-icons tiny">edit</i>
                                     Изменить
                                     <input type="hidden" value="<%= note.id %>">
@@ -110,36 +249,28 @@
                         </div>
                     </div>
                 </div>
-            <% }) %>
-        </div>
-    <% } else { %>
-        <h4 id="no-notes">У вас ещё нет записей</h4>
-    <% } %>
-    <div class="row">
-        <div class="col s12 m6 l6">
-            <a class="waves-effect waves-light btn" id="new_note_button">
-                <i class="material-icons left">add</i>
-                Создать запись
-            </a>
-        </div>
-        <div class="col s12 m6 l6">
-            <div class="hide-on-med-and-up">
-                <br>
             </div>
-            <a id="sync-button" class="btn waves-effect waves-light">
-                <i class="material-icons left">cloud</i>
-                Синхронизировать
-            </a>
+        <% }) %>
+    </div>
+<% } else { %>
+    <h4 id="no-notes">У вас ещё нет записей</h4>
+<% } %>
+<div class="buttons-group">
+    <div class="button-container">
+        <div class="btn" id="new_note_button">
+            <div class="material-icons btn-icon">add</div>
+            Создать запись
+        </div>
+    </div>
+    <div class="button-container">
+        <div class="btn" id="sync-button">
+            <i class="material-icons btn-icon">cloud</i>
+            Синхронизировать
         </div>
     </div>
 </div>
 <script>
     let event = new Event('init-for-profile-page')
     window.dispatchEvent(event)
-    $(".menu-button").sideNav();
-    const labels = document.querySelectorAll('label')
-    for (let item of labels) {
-        item.style.color = 'black'
-    }
 </script>
 <%- include('blocks/footer.ejs') %>
