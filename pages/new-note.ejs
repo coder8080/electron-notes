@@ -17,12 +17,6 @@
     }
 
     .btn {
-        padding: 10px 30px 10px 30px;
-        border-radius: 15px;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        width: 200px;
         margin-bottom: 20px;
     }
 </style>
@@ -70,13 +64,23 @@
                 </div>
             </div>
         </div>
-        <div id="submit" class="btn">
-            <i class="material-icons btn-icon">add</i>
-            Создать
-        </div>
-        <div id="cancel-button" class="btn">
-            <i class="material-icons btn-icon">cancel</i>
-            Отмена
+        <div class="buttons-group">
+            <div class="button-container-2">
+                <div id="submit" class="btn">
+                    <i class="material-icons btn-icon">add</i>
+                    <div class="btn-text">
+                        Создать
+                    </div>
+                </div>
+            </div>
+            <div class="button-container-2">
+                <div id="cancel-button" class="btn">
+                    <i class="material-icons btn-icon">cancel</i>
+                    <div class="btn-text">
+                        Отмена
+                    </div>
+                </div>
+            </div>
         </div>
     </form>
 </div>

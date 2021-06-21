@@ -7,18 +7,8 @@
         width: 100%;
     }
 
-    .material-icons {
+    .icon-and-input i {
         margin-right: 5px;
-    }
-
-    .btn {
-        padding: 10px 30px 10px 30px;
-        border-radius: 15px;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        width: 200px;
-        margin-bottom: 20px;
     }
 </style>
 <div class="center">
@@ -78,13 +68,23 @@
                 <label for="password-input" class="form-label">Пароль</label>
             </div>
         </div>
-        <div class="btn" id="submit">
-            <i class="material-icons btn-icon">cloud</i>
-            Синхронизировать
-        </div>
-        <div class="btn" id="cancel-button">
-            <i class="material-icons btn-icon">cancel</i>
-            Отмена
+        <div class="buttons-group">
+            <div class="button-container-2-wrap">
+                <div class="btn" id="submit">
+                    <i class="material-icons btn-icon">cloud</i>
+                    <div class="btn-text">
+                        Синхронизировать
+                    </div>
+                </div>
+            </div>
+            <div class="button-container-2-wrap">
+                <div class="btn" id="cancel-button">
+                    <i class="material-icons btn-icon">cancel</i>
+                    <div class="btn-text">
+                        Отмена
+                    </div>
+                </div>
+            </div>
         </div>
     </form>
 </div>

@@ -97,30 +97,6 @@
         opacity: 0.5;
     }
 
-    .buttons-group {
-        width: 100%;
-        display: flex;
-        flex-direction: row;
-        flex-wrap: wrap;
-        margin-top: 50px;
-    }
-
-    .button-container {
-        width: 50%;
-        display: flex;
-        justify-content: center;
-    }
-
-    .btn {
-        padding: 10px 30px 10px 30px;
-        border-radius: 15px;
-        min-width: 1px;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        width: 180px;
-    }
-
     @keyframes menu-out {
         from {
             left: -300px
@@ -150,6 +126,10 @@
 
     .read, .change {
         cursor: pointer;
+    }
+
+    .no-notes {
+        font-size: 25px;
     }
 </style>
 <div class="navbar">
@@ -253,19 +233,23 @@
         <% }) %>
     </div>
 <% } else { %>
-    <h4 id="no-notes">У вас ещё нет записей</h4>
+    <div class="center no-notes">У вас ещё нет записей</div>
 <% } %>
 <div class="buttons-group">
-    <div class="button-container">
+    <div class="button-container-2">
         <div class="btn" id="new_note_button">
-            <div class="material-icons btn-icon">add</div>
-            Создать запись
+            <i class="material-icons btn-icon">add</i>
+            <div class="btn-text">
+                Создать запись
+            </div>
         </div>
     </div>
-    <div class="button-container">
+    <div class="button-container-2">
         <div class="btn" id="sync-button">
             <i class="material-icons btn-icon">cloud</i>
-            Синхронизировать
+            <div class="btn-text">
+                Синхронизировать
+            </div>
         </div>
     </div>
 </div>

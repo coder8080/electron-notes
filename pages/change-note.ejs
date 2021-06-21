@@ -19,16 +19,6 @@
     #text-input:focus {
         outline: none;
     }
-
-    .btn {
-        padding: 10px 30px 10px 30px;
-        border-radius: 15px;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        width: 200px;
-        margin-bottom: 20px;
-    }
 </style>
 <div class="container center">
     <h2>Изменить запись "<%= note.heading %>"</h2>
@@ -68,19 +58,22 @@
         <% } else { %>
             <p>Ошибка: неизвестный тип записи (<%- note.type %>)</p>
         <% } %>
-        <div id="submit" class="btn">
-            <i class="material-icons btn-icon">save</i>
-            Сохранить изменения
-        </div>
-        <div id="cancel-button" class="btn">
-            <i class="material-icons btn-icon">cancel</i>
-            Отмена
-        </div>
-        <div class="row">
-            <div class="col s12 m6">
+        <div class="buttons-group">
+            <div class="button-container-2-wrap">
+                <div id="submit" class="btn big-btn">
+                    <i class="material-icons btn-icon">save</i>
+                    <div class="btn-text">
+                        Сохранить изменения
+                    </div>
+                </div>
             </div>
-            <div class="col s12 m6">
-                <div class="hide-on-med-and-up"><br></div>
+            <div class="button-container-2-wrap">
+                <div id="cancel-button" class="btn">
+                    <i class="material-icons btn-icon">cancel</i>
+                    <div class="btn-text">
+                        Отмена
+                    </div>
+                </div>
             </div>
         </div>
         <input type="hidden" name="type" value="<%= note.type %>">

@@ -1,13 +1,6 @@
 <%- include('blocks/head.ejs', {title: note.heading}) %>
 <style>
     .btn {
-        padding: 10px 30px 10px 30px;
-        border-radius: 15px;
-        min-width: 1px;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        width: 140px;
         margin-bottom: 20px;
     }
 </style>
@@ -46,17 +39,31 @@
     <% } else { %>
         <p>Ошибка - неизвестный тип(<%= note.type %>)</p>
     <% } %>
-    <div class="btn change-button">
-        <i class="material-icons btn-icon">edit</i>
-        Изменить
-    </div>
-    <div class="btn go-on-main-button">
-        <i class="material-icons btn-icon">home</i>
-        На главную
-    </div>
-    <div class="btn remove-button">
-        <i class="material-icons btn-icon">delete</i>
-        Удалить
+    <div class="buttons-group">
+        <div class="button-container-3-wrap">
+            <div class="btn change-button">
+                <i class="material-icons btn-icon">edit</i>
+                <div class="btn-text">
+                    Изменить
+                </div>
+            </div>
+        </div>
+        <div class="button-container-3-wrap">
+            <div class="btn go-on-main-button">
+                <i class="material-icons btn-icon">home</i>
+                <div class="btn-text">
+                    На главную
+                </div>
+            </div>
+        </div>
+        <div class="button-container-3-wrap">
+            <div class="btn remove-button">
+                <i class="material-icons btn-icon">delete</i>
+                <div class="btn-text">
+                    Удалить
+                </div>
+            </div>
+        </div>
     </div>
 </div>
 <input type="hidden" id="id-input" value="<%= note.id %>" name="id">
